@@ -1,14 +1,15 @@
 <div class="container">
-  <div fxLayout="row" fxLayoutAlign="center center" class="content">
+  <div fxLayout="row" fxLayoutAlign="left center" class="content">
     <mat-card class="card">
       <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
         <h4>{{ title }}</h4>
       </mat-card-title>
       <mat-card-content>
 
-        <app-exercises-list [rows]="rows" [columns]="columns"></app-exercises-list>
+        <app-exercise-form-wizard></app-exercise-form-wizard>
 
       </mat-card-content>
     </mat-card>
   </div>
 </div>
+

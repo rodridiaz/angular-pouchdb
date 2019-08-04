@@ -9,26 +9,26 @@ export interface ExerciseDetail {
   id: number;
   name: string;
   minScore: number;
-  jointType: JointTypes;
-  jointTypePosition: JointTypePositions;
-  jointTypeBaseMaterial: JointTypeBaseMaterials;
+  jointType: string;
+  jointTypePosition: string;
+  jointTypeBaseMaterial: string;
   passes: JointTypeProcesses[];
 }
 
 export interface JointTypeProcesses {
-  passProcessType: PassProcessTypes;
-  fillerMaterial: FillerMaterials;
-  fillerMaterialDiameter: FillerMaterialDiameters;
-  gasType: GasTypes;
+  passProcessType: string;
+  fillerMaterial: string;
+  fillerMaterialDiameter: string;
+  gasType: string;
 }
 
-export enum JointTypes {
+export enum JointTypesEnumn {
   BasedOnPlate = 'basedOnPlate',
   T = 't',
   Lap = 'lap'
 }
 
-export enum JointTypePositions {
+export enum JointTypePositionsEnum {
   F1 = '1F',
   F2 = '2F',
   F3 = '3F',
@@ -37,12 +37,12 @@ export enum JointTypePositions {
   F6 = '6F'
 }
 
-export enum JointTypeBaseMaterials {
+export enum JointTypeBaseMaterialsEnum {
   CarbonSteel = 'carbonSteel',
   StainlessSteel = 'stainlessSteel'
 }
 
-export enum FillerMaterials {
+export enum FillerMaterialsEnum {
   E7018 = 'E7018',
   E316L = 'E316L',
   ER70S6 = 'ER70S-6',
@@ -51,13 +51,13 @@ export enum FillerMaterials {
   E71T7 = 'E71T-7'
 }
 
-export enum FillerMaterialDiameters {
+export enum FillerMaterialDiametersEnum {
   MM1 = '1.0mm',
   MM2 = '2.0mm',
   MM3 = '3.0mm'
 }
 
-export enum PassProcessTypes {
+export enum PassProcessTypesEnum {
   GMAW = 'GMAW',
   SMAW = 'SMAW',
   FCAW = 'FCAW'
