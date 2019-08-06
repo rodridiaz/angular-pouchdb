@@ -23,9 +23,9 @@ export interface JointTypeProcesses {
 }
 
 export enum JointTypesEnumn {
-  BasedOnPlate = 'basedOnPlate',
-  T = 't',
-  Lap = 'lap'
+  BasedOnPlate = 'Based on plate',
+  T = 'T',
+  Lap = 'Lap'
 }
 
 export enum JointTypePositionsEnum {
@@ -38,8 +38,8 @@ export enum JointTypePositionsEnum {
 }
 
 export enum JointTypeBaseMaterialsEnum {
-  CarbonSteel = 'carbonSteel',
-  StainlessSteel = 'stainlessSteel'
+  CarbonSteel = 'Carbon steel',
+  StainlessSteel = 'Stainless steel'
 }
 
 export enum FillerMaterialsEnum {

@@ -1,5 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
+import {Component, OnInit, Input} from '@angular/core';
+import { FormGroup, FormControl} from '@angular/forms';
+import { FieldConfig } from './field-config.interface';
+import { OptionBuilder } from './utils/option-builder';
 
 @Component({
   selector: 'app-exercise-form-wizard',
@@ -8,25 +10,44 @@ import {FormBuilder, FormGroup, Validators, FormArray} from '@angular/forms';
 })
 export class ExerciseFormWizardComponent implements OnInit {
   isLinear = true;
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  passesList: FormArray;
-  options = [
-    {value: 'steak-0', viewValue: 'Steak'},
-    {value: 'pizza-1', viewValue: 'Pizza'},
-    {value: 'tacos-2', viewValue: 'Tacos'}
-  ];
+  @Input() fieldsConfig: FieldConfig[];
+  form: FormGroup;
 
-  constructor(private _formBuilder: FormBuilder) {}
+  constructor() {}
 
   ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required],
-      // f2ctrl: this._formBuilder.control({value: 'my val', disabled: true})
-      f2ctrl: ['', Validators.required],
+    const formGroup = {};
+
+    this.fieldsConfig.forEach(formControl => {
+      formGroup[formControl.key] = new FormControl('');
     });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
+
+    this.form = new FormGroup(formGroup);
+    this.onChanges();
+  }
+
+  onChanges(): void {
+    this.fieldsConfig
+      .filter(config => OptionBuilder.retrieveSelectFieldsWithVisibleIf(config))
+      .map(config => OptionBuilder.optionObjectBuilder(config))
+      .forEach(customOptionObject => this.setSubscriptions(customOptionObject));
+  }
+
+  onSubmit(): void {
+    if (this.form.valid) {
+      console.log(this.form.value);
+    }
+  }
+
+  setSubscriptions(field): void {
+    field.controlsToSubscribe.forEach(controlToSuscribe => {
+      this.controlSetSubscription(controlToSuscribe, field);
+    });
+  }
+
+  controlSetSubscription(control, field): void {
+    this.form.get(control).valueChanges.subscribe(val => {
+      OptionBuilder.setSelectOptionsStates(field, val, this.form);
     });
   }
 }
