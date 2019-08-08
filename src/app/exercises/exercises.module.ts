@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
-import { ExercisesRoutingModule } from './exercises-routing.module';
 import {
   MatTableModule,
   MatPaginatorModule,
@@ -11,18 +11,28 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatButtonModule,
-  MatSelectModule} from '@angular/material';
-import { ExercisesComponent } from './pages/exercises/exercises.component';
+  MatSelectModule } from '@angular/material';
+
+import { ExercisesRoutingModule } from './exercises-routing.module';
+import {
+    DynamicFormComponent,
+    ButtonComponent,
+    DynamicFieldDirective,
+    InputComponent,
+    SelectComponent } from '../ui';
 import { ExercisesListComponent } from './components/exercises-list/exercises-list.component';
 import { ExerciseFormWizardComponent } from './components/exercise-form-wizard/exercise-form-wizard.component';
+import { ExerciseDetailsComponent } from './components/exercise-details/exercise-details.component';
+import { ExercisesComponent } from './pages/exercises/exercises.component';
 import { AddNewExerciseComponent } from './pages/exercise/add-new-exercise/add-new-exercise.component';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ExerciseComponent } from './pages/exercise/exercise.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    ExercisesRoutingModule,
+    FormsModule,
     ReactiveFormsModule,
+    ExercisesRoutingModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
@@ -34,10 +44,22 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
     MatSelectModule
   ],
   declarations: [
+    DynamicFormComponent,
+    DynamicFieldDirective,
+    ButtonComponent,
+    InputComponent,
+    SelectComponent,
     ExercisesComponent,
     ExercisesListComponent,
     ExerciseFormWizardComponent,
-    AddNewExerciseComponent
+    AddNewExerciseComponent,
+    ExerciseComponent,
+    ExerciseDetailsComponent
+  ],
+  entryComponents: [
+    ButtonComponent,
+    InputComponent,
+    SelectComponent
   ]
 })
 export class ExercisesModule { }
