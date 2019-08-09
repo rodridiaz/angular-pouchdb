@@ -44,7 +44,11 @@ export class ExerciseDetailsComponent {
       type: 'select',
       label: 'Joint type',
       name: 'jointType',
-      options: [JointTypesEnumn.BasedOnPlate, JointTypesEnumn.T, JointTypesEnumn.Lap],
+      options: [
+        { value: JointTypesEnumn.BasedOnPlate },
+        { value: JointTypesEnumn.T },
+        { value: JointTypesEnumn.Lap }
+      ],
       validations: [
         {
           name: 'required',
@@ -58,12 +62,43 @@ export class ExerciseDetailsComponent {
       label: 'Joint type position',
       name: 'jointTypePosition',
       options: [
-        JointTypePositionsEnum.F1,
-        JointTypePositionsEnum.F2,
-        JointTypePositionsEnum.F3,
-        JointTypePositionsEnum.F4,
-        JointTypePositionsEnum.F5,
-        JointTypePositionsEnum.F6
+        {
+          value: JointTypePositionsEnum.F1,
+          visibleIf: [
+            { 'jointType': JointTypesEnumn.BasedOnPlate },
+            { 'jointType': JointTypesEnumn.T },
+          ]
+        },
+        {
+          value: JointTypePositionsEnum.F2
+        },
+        {
+          value: JointTypePositionsEnum.F3,
+          visibleIf: [
+            { 'jointType': JointTypesEnumn.BasedOnPlate },
+            { 'jointType': JointTypesEnumn.T },
+          ]
+        },
+        {
+          value: JointTypePositionsEnum.F4,
+          visibleIf: [
+            { 'jointType': JointTypesEnumn.T },
+            { 'jointType': JointTypesEnumn.Lap },
+          ]
+        },
+        {
+          value: JointTypePositionsEnum.F5,
+          visibleIf: [
+            { 'jointType': JointTypesEnumn.T },
+            { 'jointType': JointTypesEnumn.Lap },
+          ]
+        },
+        {
+          value: JointTypePositionsEnum.F6,
+          visibleIf: {
+            'jointType': JointTypesEnumn.T
+          }
+        }
       ],
       validations: [
         {
@@ -78,8 +113,8 @@ export class ExerciseDetailsComponent {
       label: 'Joint type material',
       name: 'jointTypeMaterial',
       options: [
-        JointTypeBaseMaterialsEnum.CarbonSteel,
-        JointTypeBaseMaterialsEnum.StainlessSteel
+        { value: JointTypeBaseMaterialsEnum.CarbonSteel },
+        { value: JointTypeBaseMaterialsEnum.StainlessSteel }
       ],
       validations: [
         {

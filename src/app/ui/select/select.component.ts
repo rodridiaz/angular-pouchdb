@@ -7,7 +7,7 @@ import { FieldConfig } from '../field.interface';
   template: `
     <mat-form-field class="demo-full-width margin-top" [formGroup]="group">
       <mat-select [placeholder]="field.label" [formControlName]="field.name">
-        <mat-option *ngFor="let item of field.options" [value]="item">{{item}}</mat-option>
+        <mat-option *ngFor="let item of field.options" [value]="item.value" [disabled]="item.hidden">{{item.value}}</mat-option>
       </mat-select>
     </mat-form-field>
   `,

@@ -14,6 +14,8 @@ import {
 } from '@angular/forms';
 import { FieldConfig } from '../field.interface';
 
+import { OptionBuilder } from '../utils/option-builder';
+
 @Component({
   exportAs: 'dynamicForm',
   selector: 'app-dynamic-form',
@@ -43,6 +45,15 @@ export class DynamicFormComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.createControl();
+    this.onChanges();
+  }
+
+  onChanges(): void {
+    this.fields
+      .filter(config => OptionBuilder.getSelectFieldsWithVisibleIf(config))
+      .map(config => OptionBuilder.optionObjectBuilder(config))
+      .forEach(customOptionObject => this.setSubscriptions(customOptionObject));
+
   }
 
   onSubmit(event: Event) {
@@ -83,6 +94,18 @@ export class DynamicFormComponent implements OnInit {
     Object.keys(formGroup.controls).forEach(field => {
       const control = formGroup.get(field);
       control.markAsTouched({ onlySelf: true });
+    });
+  }
+
+  setSubscriptions(field): void {
+    field.controlsToSubscribe.forEach(controlToSuscribe => {
+      this.controlSetSubscription(controlToSuscribe, field);
+    });
+  }
+
+  controlSetSubscription(control, field): void {
+    this.form.get(control).valueChanges.subscribe(val => {
+      OptionBuilder.setSelectOptionsStates(field, val, this.form);
     });
   }
 }
