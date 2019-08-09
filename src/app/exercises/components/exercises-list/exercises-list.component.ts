@@ -22,6 +22,5 @@ export class ExercisesListComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.displayedColumns = this.columns.map(x => x.columnDef);
-
   }
 }

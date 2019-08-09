@@ -7,10 +7,12 @@ export interface FieldConfig {
   label?: string;
   name?: string;
   inputType?: string;
-  options?: {
-    value: any,
-    visibleIf?: { [key: string]: any };
-  }[] | any;
+  options?:
+    | {
+        value: any;
+        visibleIf?: { [key: string]: any };
+      }[]
+    | any;
   collections?: any;
   type: string;
   value?: any;

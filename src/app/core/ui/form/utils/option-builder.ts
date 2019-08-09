@@ -3,7 +3,6 @@ import { FormGroup } from '@angular/forms';
 import { FieldConfig } from '../field.interface';
 
 export class OptionBuilder {
-
   static optionObjectBuilder = (fieldConfig: FieldConfig): any => {
     return {
       config: fieldConfig,
@@ -13,9 +12,13 @@ export class OptionBuilder {
         .flatMap(visibleIfObj => Object.keys(visibleIfObj))
         .filter((value, index, self) => self.indexOf(value) === index)
     };
-  }
+  };
 
-  static setSelectOptionsStates = (control, value: string, form: FormGroup): void => {
+  static setSelectOptionsStates = (
+    control,
+    value: string,
+    form: FormGroup
+  ): void => {
     control.config.options.forEach(optionItem => {
       const isHidden = !isVisible(optionItem.visibleIf, value);
       optionItem.hidden = isHidden;
@@ -23,9 +26,12 @@ export class OptionBuilder {
         form.get(control.config.name).reset();
       }
     });
-  }
+  };
 
   static getSelectFieldsWithVisibleIf = (config: FieldConfig): FieldConfig => {
-    return config.options !== undefined && config.options.some(option => option.visibleIf !== undefined);
-  }
+    return (
+      config.options !== undefined &&
+      config.options.some(option => option.visibleIf !== undefined)
+    );
+  };
 }

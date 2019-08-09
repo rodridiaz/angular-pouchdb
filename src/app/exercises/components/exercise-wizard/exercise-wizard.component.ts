@@ -2,7 +2,11 @@ import { Component, ViewChild } from '@angular/core';
 import { FieldConfig, StepConfig } from '../../../core/ui/form/field.interface';
 import { Validators } from '@angular/forms';
 import { DynamicFormWizardComponent } from '../../../core/ui/form';
-import { JointTypesEnumn, JointTypePositionsEnum, JointTypeBaseMaterialsEnum } from '../../shared/exercise';
+import {
+  JointTypesEnumn,
+  JointTypePositionsEnum,
+  JointTypeBaseMaterialsEnum
+} from '../../shared/exercise';
 
 @Component({
   selector: 'app-exercise-wizard',
@@ -10,19 +14,25 @@ import { JointTypesEnumn, JointTypePositionsEnum, JointTypeBaseMaterialsEnum } f
   styleUrls: ['./exercise-wizard.component.css']
 })
 export class ExerciseWizardComponent {
-
   @ViewChild(DynamicFormWizardComponent) form: DynamicFormWizardComponent;
 
   stepsConfig: StepConfig[] = [
     {
       name: 'generalInfo',
       label: 'General Information',
-      includedFields: ['name', 'jointType', 'wizardNextButton'],
+      includedFields: ['name', 'jointType', 'wizardNextButton']
     },
     {
       name: 'pass',
       label: 'First Pass Information',
-      includedFields: ['minScore', 'jointTypePosition', 'jointTypeMaterial', 'wizardPreviousButton', 'wizardNextButton', 'saveButton']
+      includedFields: [
+        'minScore',
+        'jointTypePosition',
+        'jointTypeMaterial',
+        'wizardPreviousButton',
+        'wizardNextButton',
+        'saveButton'
+      ]
     }
   ];
 
@@ -78,8 +88,8 @@ export class ExerciseWizardComponent {
         {
           value: JointTypePositionsEnum.F1,
           visibleIf: [
-            { 'jointType': JointTypesEnumn.BasedOnPlate },
-            { 'jointType': JointTypesEnumn.T },
+            { jointType: JointTypesEnumn.BasedOnPlate },
+            { jointType: JointTypesEnumn.T }
           ]
         },
         {
@@ -88,28 +98,28 @@ export class ExerciseWizardComponent {
         {
           value: JointTypePositionsEnum.F3,
           visibleIf: [
-            { 'jointType': JointTypesEnumn.BasedOnPlate },
-            { 'jointType': JointTypesEnumn.T },
+            { jointType: JointTypesEnumn.BasedOnPlate },
+            { jointType: JointTypesEnumn.T }
           ]
         },
         {
           value: JointTypePositionsEnum.F4,
           visibleIf: [
-            { 'jointType': JointTypesEnumn.T },
-            { 'jointType': JointTypesEnumn.Lap },
+            { jointType: JointTypesEnumn.T },
+            { jointType: JointTypesEnumn.Lap }
           ]
         },
         {
           value: JointTypePositionsEnum.F5,
           visibleIf: [
-            { 'jointType': JointTypesEnumn.T },
-            { 'jointType': JointTypesEnumn.Lap },
+            { jointType: JointTypesEnumn.T },
+            { jointType: JointTypesEnumn.Lap }
           ]
         },
         {
           value: JointTypePositionsEnum.F6,
           visibleIf: {
-            'jointType': JointTypesEnumn.T
+            jointType: JointTypesEnumn.T
           }
         }
       ],
@@ -149,8 +159,7 @@ export class ExerciseWizardComponent {
     }
   ];
 
-  submit(value: {[name: string]: any}) {
+  submit(value: { [name: string]: any }) {
     console.log(value);
   }
-
 }

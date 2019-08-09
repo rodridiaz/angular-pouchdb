@@ -1,7 +1,6 @@
-<p>
-  exercise-wizard works!
-</p>
-<app-dynamic-form-wizard [fields]="regConfig" [steps]="stepsConfig" (submit)="submit($event)"></app-dynamic-form-wizard>
-<div class="margin-top">
-  {{ form.value | json }}
-</div>
+<app-dynamic-form-wizard
+  [fields]="regConfig"
+  [steps]="stepsConfig"
+  (submit)="submit($event)"
+>
+</app-dynamic-form-wizard>

@@ -1,40 +1,24 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output
-} from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl
-} from '@angular/forms';
-import { FieldConfig } from '../field.interface';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { FieldConfig } from '../field.interface';
 import { OptionBuilder } from '../utils/option-builder';
 
 @Component({
   exportAs: 'dynamicForm',
   selector: 'app-dynamic-form',
   template: `
-    <form
-      [formGroup]="form"
-      (submit)="onSubmit($event)">
-
-      <!-- Form Control -->
+    <form [formGroup]="form" (submit)="onSubmit($event)">
+      <!-- Form Controls -->
       <ng-container
-        *ngFor="let field of fields;"
+        *ngFor="let field of fields"
         appDynamicField
         [field]="field"
-        [group]="form">
+        [group]="form"
+      >
       </ng-container>
-
     </form>
-  `,
-  styles: []
+  `
 })
 export class DynamicFormComponent implements OnInit {
   @Input() fields: FieldConfig[] = [];
@@ -58,7 +42,6 @@ export class DynamicFormComponent implements OnInit {
       .filter(config => OptionBuilder.getSelectFieldsWithVisibleIf(config))
       .map(config => OptionBuilder.optionObjectBuilder(config))
       .forEach(customOptionObject => this.setSubscriptions(customOptionObject));
-
   }
 
   onSubmit(event: Event) {
@@ -74,7 +57,9 @@ export class DynamicFormComponent implements OnInit {
   createControl() {
     const group = this.fb.group({});
     this.fields.forEach(field => {
-      if (field.type === 'button') { return; }
+      if (field.type === 'button') {
+        return;
+      }
       const control = this.fb.control(
         field.value,
         this.bindValidations(field.validations || [])

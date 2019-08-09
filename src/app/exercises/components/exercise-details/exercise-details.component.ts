@@ -2,7 +2,11 @@ import { Component, ViewChild } from '@angular/core';
 import { FieldConfig } from '../../../core/ui/form/field.interface';
 import { DynamicFormComponent } from '../../../core/ui/form';
 import { Validators } from '@angular/forms';
-import { JointTypesEnumn, JointTypePositionsEnum, JointTypeBaseMaterialsEnum } from '../../shared/exercise';
+import {
+  JointTypesEnumn,
+  JointTypePositionsEnum,
+  JointTypeBaseMaterialsEnum
+} from '../../shared/exercise';
 
 @Component({
   selector: 'app-exercise-details',
@@ -10,7 +14,6 @@ import { JointTypesEnumn, JointTypePositionsEnum, JointTypeBaseMaterialsEnum } f
   styleUrls: ['./exercise-details.component.css']
 })
 export class ExerciseDetailsComponent {
-
   @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
 
   regConfig: FieldConfig[] = [
@@ -65,8 +68,8 @@ export class ExerciseDetailsComponent {
         {
           value: JointTypePositionsEnum.F1,
           visibleIf: [
-            { 'jointType': JointTypesEnumn.BasedOnPlate },
-            { 'jointType': JointTypesEnumn.T },
+            { jointType: JointTypesEnumn.BasedOnPlate },
+            { jointType: JointTypesEnumn.T }
           ]
         },
         {
@@ -75,28 +78,28 @@ export class ExerciseDetailsComponent {
         {
           value: JointTypePositionsEnum.F3,
           visibleIf: [
-            { 'jointType': JointTypesEnumn.BasedOnPlate },
-            { 'jointType': JointTypesEnumn.T },
+            { jointType: JointTypesEnumn.BasedOnPlate },
+            { jointType: JointTypesEnumn.T }
           ]
         },
         {
           value: JointTypePositionsEnum.F4,
           visibleIf: [
-            { 'jointType': JointTypesEnumn.T },
-            { 'jointType': JointTypesEnumn.Lap },
+            { jointType: JointTypesEnumn.T },
+            { jointType: JointTypesEnumn.Lap }
           ]
         },
         {
           value: JointTypePositionsEnum.F5,
           visibleIf: [
-            { 'jointType': JointTypesEnumn.T },
-            { 'jointType': JointTypesEnumn.Lap },
+            { jointType: JointTypesEnumn.T },
+            { jointType: JointTypesEnumn.Lap }
           ]
         },
         {
           value: JointTypePositionsEnum.F6,
           visibleIf: {
-            'jointType': JointTypesEnumn.T
+            jointType: JointTypesEnumn.T
           }
         }
       ],
@@ -125,15 +128,13 @@ export class ExerciseDetailsComponent {
       ]
     },
     {
-      type: 'button',
-      label: 'Save'
+      type: 'submit',
+      label: 'Save',
+      name: 'saveButton'
     }
   ];
 
-  submit(value: {[name: string]: any}) {
+  submit(value: { [name: string]: any }) {
     console.log(value);
   }
-
 }
-
-

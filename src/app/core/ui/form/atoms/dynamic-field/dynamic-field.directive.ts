@@ -13,12 +13,11 @@ import { ButtonComponent } from '../button/button.component';
 import { SelectComponent } from '../select/select.component';
 import { InputComponent } from '../input/input.component';
 
-
 const componentMapper = {
   input: InputComponent,
   button: ButtonComponent,
   submit: ButtonComponent,
-  select: SelectComponent,
+  select: SelectComponent
 };
 
 @Directive({
@@ -37,8 +36,10 @@ export class DynamicFieldDirective implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (this.isWizardForm() && this.fieldBelongToThisStep()) {
-
+    if (
+      !this.isWizardForm() ||
+      (this.isWizardForm() && this.fieldBelongToThisStep())
+    ) {
       const factory = this.resolver.resolveComponentFactory(
         componentMapper[this.field.type]
       );
@@ -55,5 +56,4 @@ export class DynamicFieldDirective implements OnInit {
   private fieldBelongToThisStep() {
     return this.step.includedFields.indexOf(this.field.name) !== -1;
   }
-
 }
