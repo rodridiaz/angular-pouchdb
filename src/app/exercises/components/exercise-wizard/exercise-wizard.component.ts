@@ -1,6 +1,6 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { StepConfig, FieldConfig } from '../../../core/ui/form/field.interface';
-import { DynamicFormWizardComponent } from '../../../core/ui/form';
+import { DynamicFormWizardComponent } from '../../../core/ui';
 
 @Component({
   selector: 'app-exercise-wizard',

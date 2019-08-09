@@ -20,8 +20,9 @@ import {
   DynamicFieldDirective,
   InputComponent,
   SelectComponent,
-  DynamicFormWizardComponent
-} from '../core/ui/form';
+  DynamicFormWizardComponent,
+  DynamicTableComponent
+} from '../core/ui';
 import { ExercisesListComponent } from './components/exercises-list/exercises-list.component';
 import { ExerciseDetailsComponent } from './components/exercise-details/exercise-details.component';
 import { ExercisesComponent } from './pages/exercises/exercises.component';
@@ -51,6 +52,7 @@ import { AddNewComponent } from './pages/exercise/add-new/add-new.component';
     ButtonComponent,
     InputComponent,
     SelectComponent,
+    DynamicTableComponent,
     ExercisesComponent,
     ExercisesListComponent,
     ExerciseComponent,

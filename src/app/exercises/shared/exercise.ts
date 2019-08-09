@@ -12,10 +12,10 @@ export interface ExerciseDetail {
   jointType: string;
   jointTypePosition: string;
   jointTypeBaseMaterial: string;
-  passes: JointTypeProcesses[];
+  passes: Pass[];
 }
 
-export interface JointTypeProcesses {
+export interface Pass {
   passProcessType: string;
   fillerMaterial: string;
   fillerMaterialDiameter: string;

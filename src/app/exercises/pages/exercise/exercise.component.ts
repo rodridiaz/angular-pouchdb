@@ -31,6 +31,16 @@ const REG_CONFIG: FieldConfig[] = [
         name: 'required',
         validator: Validators.required,
         message: 'Minimum score required'
+      },
+      {
+        name: 'min',
+        validator: Validators.min(0),
+        message: 'Number should be greater than 0'
+      },
+      {
+        name: 'max',
+        validator: Validators.max(100),
+        message: 'Number should be less than 100'
       }
     ]
   },

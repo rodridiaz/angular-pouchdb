@@ -1,6 +1,6 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { FieldConfig } from '../../../core/ui/form/field.interface';
-import { DynamicFormComponent } from '../../../core/ui/form';
+import { DynamicFormComponent } from '../../../core/ui';
 
 @Component({
   selector: 'app-exercise-details',
