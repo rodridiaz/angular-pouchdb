@@ -6,21 +6,22 @@ import {
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
-  MatCardModule,
   MatStepperModule,
   MatFormFieldModule,
   MatInputModule,
   MatButtonModule,
-  MatSelectModule } from '@angular/material';
+  MatSelectModule
+} from '@angular/material';
 
 import { ExercisesRoutingModule } from './exercises-routing.module';
 import {
-    DynamicFormComponent,
-    ButtonComponent,
-    DynamicFieldDirective,
-    InputComponent,
-    SelectComponent,
-    DynamicFormWizardComponent } from '../core/ui/form';
+  DynamicFormComponent,
+  ButtonComponent,
+  DynamicFieldDirective,
+  InputComponent,
+  SelectComponent,
+  DynamicFormWizardComponent
+} from '../core/ui/form';
 import { ExercisesListComponent } from './components/exercises-list/exercises-list.component';
 import { ExerciseDetailsComponent } from './components/exercise-details/exercise-details.component';
 import { ExercisesComponent } from './pages/exercises/exercises.component';
@@ -37,7 +38,6 @@ import { AddNewComponent } from './pages/exercise/add-new/add-new.component';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatCardModule,
     MatStepperModule,
     MatFormFieldModule,
     MatInputModule,
@@ -58,10 +58,6 @@ import { AddNewComponent } from './pages/exercise/add-new/add-new.component';
     ExerciseWizardComponent,
     AddNewComponent
   ],
-  entryComponents: [
-    ButtonComponent,
-    InputComponent,
-    SelectComponent
-  ]
+  entryComponents: [ButtonComponent, InputComponent, SelectComponent]
 })
-export class ExercisesModule { }
+export class ExercisesModule {}

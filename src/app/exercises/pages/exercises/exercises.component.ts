@@ -48,7 +48,6 @@ const EXAMPLE_COLUMNS: any[] = [
 export class ExercisesComponent implements OnInit {
   rows: Exercise[] = [];
   columns: any[] = [];
-  title = 'Recent Exercises';
 
   constructor() {}
 

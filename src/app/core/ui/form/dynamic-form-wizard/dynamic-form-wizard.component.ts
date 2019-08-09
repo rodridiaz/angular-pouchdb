@@ -116,15 +116,19 @@ export class DynamicFormWizardComponent implements OnInit {
   }
 
   controlSetSubscription(control, field): void {
-    let ordinal = [];
-    ordinal = this.getArrayIndexOfControl(control);
+    let controlOrdinal = [];
+    let fieldOrdinal = [];
+    controlOrdinal = this.getArrayIndexOfControl(control);
+    fieldOrdinal = this.getArrayIndexOfControl(field.config.name);
 
     this.form
       .get('formArray')
-      .get(ordinal)
+      .get(controlOrdinal)
       .get(control)
       .valueChanges.subscribe(val => {
-        OptionBuilder.setSelectOptionsStates(field, val, this.form);
+        OptionBuilder.setSelectOptionsStates(field, val, <FormGroup>(
+          this.form.get('formArray').get(fieldOrdinal)
+        ));
       });
   }
 }
