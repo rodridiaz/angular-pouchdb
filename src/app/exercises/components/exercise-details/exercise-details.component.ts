@@ -30,7 +30,7 @@ export class ExerciseDetailsComponent {
     {
       type: 'input',
       label: 'Minimum score',
-      inputType: 'text',
+      inputType: 'number',
       name: 'minScore',
       validations: [
         {

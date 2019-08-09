@@ -4,8 +4,7 @@ import {
   Directive,
   Input,
   OnInit,
-  ViewContainerRef,
-  OnChanges
+  ViewContainerRef
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
@@ -24,7 +23,7 @@ const componentMapper = {
 @Directive({
   selector: '[appDynamicField]'
 })
-export class DynamicFieldDirective implements OnInit, OnChanges {
+export class DynamicFieldDirective implements OnInit {
   @Input() field: FieldConfig;
   @Input() group: FormGroup;
 
@@ -44,15 +43,4 @@ export class DynamicFieldDirective implements OnInit, OnChanges {
     this.componentRef.instance.group = this.group;
   }
 
-  ngOnChanges(e) {
-    // console.log(e);
-    // this.field.options.forEach(optionItem => {
-    //   const isHidden = !isVisible(optionItem.visibleIf, value);
-    //   optionItem.hidden = isHidden;
-    //   if (isHidden) {
-    //     // this.form.get(this.field.name).reset();
-    //     this.componentRef.instance.field.reset();
-    //   }
-    // });
-  }
 }
