@@ -1,0 +1,9 @@
+package.json
+package-lock.json
+dist
+node_modules
+.angulardoc.json
+.vscode/*
+**/tslint.json
+**/tsconfig*.json
+src/environments
