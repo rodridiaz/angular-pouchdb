@@ -16,3 +16,9 @@ export interface FieldConfig {
   value?: any;
   validations?: Validator[];
 }
+
+export interface StepConfig {
+  name: string;
+  label: string;
+  includedFields: string[];
+}
