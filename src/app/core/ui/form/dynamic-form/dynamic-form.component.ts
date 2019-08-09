@@ -20,13 +20,18 @@ import { OptionBuilder } from '../utils/option-builder';
   exportAs: 'dynamicForm',
   selector: 'app-dynamic-form',
   template: `
-    <form class="dynamic-form" [formGroup]="form" (submit)="onSubmit($event)">
-    <ng-container
-      *ngFor="let field of fields;"
-      appDynamicField
-      [field]="field"
-      [group]="form">
-    </ng-container>
+    <form
+      [formGroup]="form"
+      (submit)="onSubmit($event)">
+
+      <!-- Form Control -->
+      <ng-container
+        *ngFor="let field of fields;"
+        appDynamicField
+        [field]="field"
+        [group]="form">
+      </ng-container>
+
     </form>
   `,
   styles: []

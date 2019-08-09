@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
-import { FieldConfig, StepConfig } from 'src/app/ui/field.interface';
+import { FieldConfig, StepConfig } from '../../../core/ui/form/field.interface';
 import { Validators } from '@angular/forms';
-import { DynamicFormWizardComponent } from 'src/app/ui';
+import { DynamicFormWizardComponent } from '../../../core/ui/form';
 import { JointTypesEnumn, JointTypePositionsEnum, JointTypeBaseMaterialsEnum } from '../../shared/exercise';
 
 @Component({

@@ -20,27 +20,47 @@ import { OptionBuilder } from '../utils/option-builder';
   exportAs: 'dynamicFormWizard',
   selector: 'app-dynamic-form-wizard',
   template: `
-    <form class="dynamic-form-wizard" [formGroup]="form" (submit)="onSubmit($event)">
-    <mat-vertical-stepper linear="false" #stepper>
-      <mat-step [stepControl]="form" *ngFor="let step of steps">
-      <ng-template matStepLabel>{{step.label}}</ng-template>
+    <form
+      [formGroup]="form"
+      (submit)="onSubmit($event)">
+
+    <mat-vertical-stepper
+      [linear]="true"
+      #stepper
+      formArrayName="formArray">
+
+      <!-- Step -->
+      <mat-step
+        [formGroupName]="i"
+        [stepControl]="form.get('formArray').get([i])"
+        *ngFor="let step of steps; let i = index;">
+
+        <ng-template matStepLabel>
+          {{step.label}}
+        </ng-template>
+
+        <!-- Form Control -->
         <ng-container
           *ngFor="let field of fields;"
           appDynamicField
           [step]="step"
           [field]="field"
-          [group]="form">
+          [group]="form.get('formArray').get([i])">
         </ng-container>
+
       </mat-step>
+
+      <!-- Fixed last Step -->
       <mat-step>
         <ng-template matStepLabel>Done</ng-template>
         You are now done.
         <div>
           <button mat-button matStepperPrevious type="button">Back</button>
           <button mat-button (click)="stepper.reset()" type="button">Reset</button>
-          <button mat-button matStepperPrevious type="submit">Submit</button>
+          <button mat-button type="submit">Submit</button>
         </div>
       </mat-step>
+
     </mat-vertical-stepper>
     </form>
   `,
@@ -49,7 +69,6 @@ import { OptionBuilder } from '../utils/option-builder';
 export class DynamicFormWizardComponent implements OnInit {
 
   @Input() fields: FieldConfig[] = [];
-
   @Input() steps: StepConfig[] = [];
 
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
@@ -59,6 +78,7 @@ export class DynamicFormWizardComponent implements OnInit {
   get value() {
     return this.form.value;
   }
+
   constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
@@ -84,16 +104,41 @@ export class DynamicFormWizardComponent implements OnInit {
   }
 
   createControl() {
-    const group = this.fb.group({});
+    const array = this.fb.array([]);
+    this.steps.forEach(() => array.push(this.fb.group({})));
+
+    const group = this.fb.group({
+      formArray: array
+    });
+
     this.fields.forEach(field => {
       if (['button', 'submit'].indexOf(field.type) !== -1) { return; }
       const control = this.fb.control(
         field.value,
         this.bindValidations(field.validations || [])
       );
-      group.addControl(field.name, control);
+
+      let ordinal = [];
+      ordinal = this.getArrayIndexOfControl(field.name);
+
+      this.addControlToStep(
+        <FormGroup>group.get('formArray').get(ordinal),
+        field.name,
+        control);
     });
     return group;
+  }
+
+  getArrayIndexOfControl(fieldName: string) {
+    return this.steps
+        .map((step, index) => step.includedFields
+          .filter(x => x === fieldName)
+          .map(() => index)
+        ).filter((n) => !!n.length);
+  }
+
+  addControlToStep(group: FormGroup, name: string, control: FormControl) {
+    group.addControl(name, control);
   }
 
   bindValidations(validations: any) {
@@ -121,7 +166,10 @@ export class DynamicFormWizardComponent implements OnInit {
   }
 
   controlSetSubscription(control, field): void {
-    this.form.get(control).valueChanges.subscribe(val => {
+    let ordinal = [];
+    ordinal = this.getArrayIndexOfControl(control);
+
+    this.form.get('formArray').get(ordinal).get(control).valueChanges.subscribe(val => {
       OptionBuilder.setSelectOptionsStates(field, val, this.form);
     });
   }

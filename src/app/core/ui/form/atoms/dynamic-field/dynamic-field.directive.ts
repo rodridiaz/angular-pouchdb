@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { FieldConfig, StepConfig } from '../field.interface';
+import { FieldConfig, StepConfig } from '../../field.interface';
 import { ButtonComponent } from '../button/button.component';
 import { SelectComponent } from '../select/select.component';
 import { InputComponent } from '../input/input.component';

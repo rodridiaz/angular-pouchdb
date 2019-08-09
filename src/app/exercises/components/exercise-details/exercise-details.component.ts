@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { FieldConfig } from 'src/app/ui/field.interface';
-import { DynamicFormComponent } from 'src/app/ui';
+import { FieldConfig } from '../../../core/ui/form/field.interface';
+import { DynamicFormComponent } from '../../../core/ui/form';
 import { Validators } from '@angular/forms';
 import { JointTypesEnumn, JointTypePositionsEnum, JointTypeBaseMaterialsEnum } from '../../shared/exercise';
 
