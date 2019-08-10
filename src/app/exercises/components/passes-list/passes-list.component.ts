@@ -1,7 +1,17 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  ViewChild
+} from '@angular/core';
 import { Pass } from '../../shared/exercise';
+import { DynamicTableComponent } from 'src/app/core/ui';
+import { MatDialogConfig, MatDialog } from '@angular/material';
+import { PassDialogComponent } from '../pass-dialog/pass-dialog.component';
 
-const EXAMPLE_COLUMNS: any[] = [
+const COLUMNS: any[] = [
   {
     columnDef: 'fillerMaterial',
     header: 'Filler material',
@@ -31,9 +41,33 @@ const EXAMPLE_COLUMNS: any[] = [
 })
 export class PassesListComponent implements OnInit {
   @Input() rows: Pass[];
+  @ViewChild(DynamicTableComponent) table: DynamicTableComponent;
+
   columns: any[];
 
+  maxPasses = 4;
+
+  constructor(private dialog: MatDialog) {}
+
   ngOnInit() {
-    this.columns = EXAMPLE_COLUMNS;
+    this.columns = COLUMNS;
+  }
+
+  addPass() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.autoFocus = true;
+    const dialogRef = this.dialog.open(PassDialogComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(val => {
+      console.log('Dialog output:', val);
+
+      this.rows.push({
+        passProcessType: 'FCAW',
+        fillerMaterial: 'E71T-1',
+        fillerMaterialDiameter: '3.0mm',
+        gasType: 'CO2'
+      });
+      this.table.dataSource._updateChangeSubscription();
+    });
   }
 }

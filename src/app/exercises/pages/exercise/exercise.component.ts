@@ -135,7 +135,7 @@ const REG_CONFIG: FieldConfig[] = [
   },
   {
     type: 'submit',
-    label: 'Save',
+    label: 'Save exercise',
     name: 'saveButton'
   }
 ];
