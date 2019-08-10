@@ -12,7 +12,8 @@ import {
   MatButtonModule,
   MatSelectModule,
   MatCardModule,
-  MatDividerModule
+  MatDividerModule,
+  MatDialogModule
 } from '@angular/material';
 
 import { ExercisesRoutingModule } from './exercises-routing.module';
@@ -32,6 +33,7 @@ import { ExerciseComponent } from './pages/exercise/exercise.component';
 import { ExerciseWizardComponent } from './components/exercise-wizard/exercise-wizard.component';
 import { AddNewComponent } from './pages/exercise/add-new/add-new.component';
 import { PassesListComponent } from './components/passes-list/passes-list.component';
+import { PassDialogComponent } from './components/pass-dialog/pass-dialog.component';
 
 @NgModule({
   imports: [
@@ -41,6 +43,7 @@ import { PassesListComponent } from './components/passes-list/passes-list.compon
     ExercisesRoutingModule,
     MatTableModule,
     MatCardModule,
+    MatDialogModule,
     MatDividerModule,
     MatPaginatorModule,
     MatSortModule,
@@ -64,8 +67,14 @@ import { PassesListComponent } from './components/passes-list/passes-list.compon
     ExerciseDetailsComponent,
     ExerciseWizardComponent,
     AddNewComponent,
-    PassesListComponent
+    PassesListComponent,
+    PassDialogComponent
   ],
-  entryComponents: [ButtonComponent, InputComponent, SelectComponent]
+  entryComponents: [
+    ButtonComponent,
+    InputComponent,
+    SelectComponent,
+    PassDialogComponent
+  ]
 })
 export class ExercisesModule {}

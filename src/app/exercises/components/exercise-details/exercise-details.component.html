@@ -1,6 +1,10 @@
 <app-dynamic-form
+  #form
   [fields]="fieldsConfig"
   [data]="data"
   (update)="submit($event)"
 >
 </app-dynamic-form>
+<mat-card-actions>
+  <button mat-button (click)="newPass(form)">ADD</button>
+</mat-card-actions>

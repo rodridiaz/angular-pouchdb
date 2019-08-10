@@ -103,8 +103,10 @@ export class DynamicFormComponent implements OnInit {
   }
 
   controlSetSubscription(control, field): void {
-    this.form.get(control).valueChanges.subscribe(val => {
-      OptionBuilder.setSelectOptionsStates(field, val, this.form);
-    });
+    if (this.form.get(control) !== null) {
+      this.form.get(control).valueChanges.subscribe(val => {
+        OptionBuilder.setSelectOptionsStates(field, val, this.form);
+      });
+    }
   }
 }
