@@ -7,9 +7,8 @@ import {
   JointTypeBaseMaterialsEnum,
   ExerciseDetail
 } from '../../shared/exercise';
-import { Observable } from 'rxjs';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { ExerciseService } from '../../shared/exercise.service';
+import { Observable, of } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
 const REG_CONFIG: FieldConfig[] = [
@@ -150,18 +149,13 @@ export class ExerciseComponent implements OnInit {
 
   exerciseDetail$: Observable<ExerciseDetail>;
 
-  constructor(
-    private route: ActivatedRoute,
-    private exerciseService: ExerciseService
-  ) {}
+  constructor(private route: ActivatedRoute) {}
 
   ngOnInit() {
     this.fieldsConfig = REG_CONFIG;
 
-    this.exerciseDetail$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.exerciseService.getExerciseDetail(params.get('id'))
-      )
+    this.exerciseDetail$ = this.route.data.pipe(
+      switchMap(data => of(data.exerciseDetail))
     );
   }
 }

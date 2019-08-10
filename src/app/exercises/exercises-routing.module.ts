@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ExercisesComponent } from './pages/exercises/exercises.component';
 import { AddNewComponent } from './pages/exercise/add-new/add-new.component';
 import { ExerciseComponent } from './pages/exercise/exercise.component';
+import { ExerciseDetailResolverService } from './pages/exercise/exercise-detail-resolver.service';
 
 const routes: Routes = [
   {
@@ -18,19 +19,12 @@ const routes: Routes = [
     data: { title: 'Add new exercise' }
   },
   {
-    path: 'exercise',
+    path: 'exercise/:id',
     component: ExerciseComponent,
-    data: {
-      title: 'Exercise Details'
+    resolve: {
+      exerciseDetail: ExerciseDetailResolverService
     },
-    children: [
-      { path: '', redirectTo: '/exercises', pathMatch: 'full' },
-      {
-        path: ':id',
-        component: ExerciseComponent,
-        data: { title: 'Edit Exercise' }
-      }
-    ]
+    data: { title: 'Edit Exercise' }
   }
 ];
 
