@@ -126,6 +126,9 @@ export class DynamicFormWizardComponent implements OnInit {
       .get(controlOrdinal)
       .get(control)
       .valueChanges.subscribe(val => {
+        if (val === null) {
+          return;
+        }
         OptionBuilder.setSelectOptionsStates(field, val, <FormGroup>(
           this.form.get('formArray').get(fieldOrdinal)
         ));

@@ -9,7 +9,6 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
         class="exercise-table"
         mat-table
         [dataSource]="dataSource"
-        data.
         matSort
         aria-label="Elements"
       >
@@ -29,6 +28,7 @@ import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
       </table>
 
       <mat-paginator
+        *ngIf="showPagination"
         [length]="dataSource.data.length"
         [pageIndex]="0"
         [pageSize]="10"
@@ -48,6 +48,7 @@ export class DynamicTableComponent implements OnInit {
 
   @Input() rows: any[];
   @Input() columns: any[];
+  @Input() showPagination?: Boolean = false;
 
   ngOnInit() {
     this.dataSource.data = this.rows;

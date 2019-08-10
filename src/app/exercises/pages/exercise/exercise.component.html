@@ -2,3 +2,17 @@
   [fieldsConfig]="fieldsConfig"
   [data]="exerciseDetail$ | async"
 ></app-exercise-details>
+<mat-divider></mat-divider>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Passes</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <app-passes-list
+      [rows]="(exerciseDetail$ | async).passes"
+    ></app-passes-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>ADD</button>
+  </mat-card-actions>
+</mat-card>

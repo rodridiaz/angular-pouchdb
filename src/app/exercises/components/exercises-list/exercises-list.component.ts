@@ -8,19 +8,8 @@ import { Exercise } from '../../shared/exercise';
   styleUrls: ['./exercises-list.component.css']
 })
 export class ExercisesListComponent implements OnInit {
-  displayedColumns: string[];
-  dataSource = new MatTableDataSource<Exercise>();
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-
   @Input() rows: Exercise[];
   @Input() columns: any[];
 
-  ngOnInit() {
-    this.dataSource.data = this.rows;
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    this.displayedColumns = this.columns.map(x => x.columnDef);
-  }
+  ngOnInit() {}
 }

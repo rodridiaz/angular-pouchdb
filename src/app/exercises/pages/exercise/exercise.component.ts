@@ -5,7 +5,8 @@ import {
   JointTypesEnumn,
   JointTypePositionsEnum,
   JointTypeBaseMaterialsEnum,
-  ExerciseDetail
+  ExerciseDetail,
+  Pass
 } from '../../shared/exercise';
 import { Observable, of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';

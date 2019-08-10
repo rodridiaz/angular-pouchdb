@@ -11,7 +11,7 @@ import { FieldConfig } from '../../field.interface';
       <button
         *ngIf="!isWizardNextButton() && !isWizardPreviousButton()"
         [type]="field.type"
-        mat-raised-button
+        mat-stroked-button
         color="primary"
       >
         {{ field.label }}
@@ -22,8 +22,7 @@ import { FieldConfig } from '../../field.interface';
         *ngIf="isWizardNextButton()"
         matStepperNext
         [type]="field.type"
-        mat-raised-button
-        color="primary"
+        mat-stroked-button
       >
         {{ field.label }}
       </button>
@@ -33,8 +32,7 @@ import { FieldConfig } from '../../field.interface';
         *ngIf="isWizardPreviousButton()"
         matStepperPrevious
         [type]="field.type"
-        mat-raised-button
-        color="primary"
+        mat-stroked-button
       >
         {{ field.label }}
       </button>

@@ -66,5 +66,6 @@ export enum PassProcessTypesEnum {
 export enum GasTypes {
   ArgonCO2 = 'Argon-CO2',
   Argon = 'Argon',
+  CO2 = 'CO2',
   NA = 'N/A'
 }

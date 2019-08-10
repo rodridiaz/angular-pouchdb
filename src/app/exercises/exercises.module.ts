@@ -10,7 +10,9 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatButtonModule,
-  MatSelectModule
+  MatSelectModule,
+  MatCardModule,
+  MatDividerModule
 } from '@angular/material';
 
 import { ExercisesRoutingModule } from './exercises-routing.module';
@@ -29,6 +31,7 @@ import { ExercisesComponent } from './pages/exercises/exercises.component';
 import { ExerciseComponent } from './pages/exercise/exercise.component';
 import { ExerciseWizardComponent } from './components/exercise-wizard/exercise-wizard.component';
 import { AddNewComponent } from './pages/exercise/add-new/add-new.component';
+import { PassesListComponent } from './components/passes-list/passes-list.component';
 
 @NgModule({
   imports: [
@@ -37,6 +40,8 @@ import { AddNewComponent } from './pages/exercise/add-new/add-new.component';
     ReactiveFormsModule,
     ExercisesRoutingModule,
     MatTableModule,
+    MatCardModule,
+    MatDividerModule,
     MatPaginatorModule,
     MatSortModule,
     MatStepperModule,
@@ -58,7 +63,8 @@ import { AddNewComponent } from './pages/exercise/add-new/add-new.component';
     ExerciseComponent,
     ExerciseDetailsComponent,
     ExerciseWizardComponent,
-    AddNewComponent
+    AddNewComponent,
+    PassesListComponent
   ],
   entryComponents: [ButtonComponent, InputComponent, SelectComponent]
 })

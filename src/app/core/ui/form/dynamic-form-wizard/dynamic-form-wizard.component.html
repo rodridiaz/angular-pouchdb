@@ -9,7 +9,6 @@
       <ng-template matStepLabel>
         {{ step.label }}
       </ng-template>
-
       <!-- Form Controls -->
       <ng-container
         *ngFor="let field of fields"
@@ -19,18 +18,29 @@
         [group]="form.get('formArray').get([i])"
       >
       </ng-container>
+      <div></div>
     </mat-step>
 
-    <!-- Fixed last Step -->
+    <!-- Fixed last Confirmation Step -->
     <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      You are now done.
+      <ng-template matStepLabel>Confirm</ng-template>
+      You are now done. Please Confirm:<br /><br />
+      <div *ngFor="let step of steps; let i = index">
+        <b>{{ step.label }}:</b>
+        {{ form.get('formArray').get([i]).value | json }}
+        <br /><br />
+      </div>
+      <br />
       <div>
-        <button mat-button matStepperPrevious type="button">Back</button>
+        <button mat-button mat-stroked-button matStepperPrevious type="button">
+          Back
+        </button>
         <button mat-button (click)="stepper.reset()" type="button">
           Reset
         </button>
-        <button mat-button type="submit">Submit</button>
+        <button mat-button mat-stroked-button color="primary" type="submit">
+          Submit
+        </button>
       </div>
     </mat-step>
   </mat-vertical-stepper>

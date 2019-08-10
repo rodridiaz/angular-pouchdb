@@ -4,22 +4,34 @@ import { Validators } from '@angular/forms';
 import {
   JointTypeBaseMaterialsEnum,
   JointTypePositionsEnum,
-  JointTypesEnumn
+  JointTypesEnumn,
+  PassProcessTypesEnum,
+  FillerMaterialsEnum,
+  FillerMaterialDiametersEnum,
+  GasTypes
 } from 'src/app/exercises/shared/exercise';
 
 const STEPS_CONFIG: StepConfig[] = [
   {
     name: 'generalInfo',
     label: 'General Information',
-    includedFields: ['name', 'jointType', 'wizardNextButton']
+    includedFields: [
+      'name',
+      'minScore',
+      'jointType',
+      'jointTypePosition',
+      'jointTypeBaseMaterial',
+      'wizardNextButton'
+    ]
   },
   {
     name: 'pass',
     label: 'First Pass Information',
     includedFields: [
-      'minScore',
-      'jointTypePosition',
-      'jointTypeBaseMaterial',
+      'passProcessType',
+      'fillerMaterial',
+      'fillerMaterialDiameter',
+      'gasType',
       'wizardPreviousButton',
       'wizardNextButton',
       'saveButton'
@@ -51,6 +63,16 @@ const FIELDS_CONFIG: FieldConfig[] = [
         name: 'required',
         validator: Validators.required,
         message: 'Minimum score required'
+      },
+      {
+        name: 'min',
+        validator: Validators.min(0),
+        message: 'Number should be greater than 0'
+      },
+      {
+        name: 'max',
+        validator: Validators.max(100),
+        message: 'Number should be less than 100'
       }
     ]
   },
@@ -135,6 +157,139 @@ const FIELDS_CONFIG: FieldConfig[] = [
         name: 'required',
         validator: Validators.required,
         message: 'Joint type base material required'
+      }
+    ]
+  },
+  {
+    type: 'select',
+    label: 'Process',
+    name: 'passProcessType',
+    options: [
+      {
+        value: PassProcessTypesEnum.GMAW,
+        visibleIf: [
+          { jointTypeBaseMaterial: JointTypeBaseMaterialsEnum.CarbonSteel }
+        ]
+      },
+      {
+        value: PassProcessTypesEnum.FCAW,
+        visibleIf: {
+          jointTypeBaseMaterial: JointTypeBaseMaterialsEnum.StainlessSteel
+        }
+      },
+      { value: PassProcessTypesEnum.SMAW }
+    ],
+    validations: [
+      {
+        name: 'required',
+        validator: Validators.required,
+        message: 'Process required'
+      }
+    ]
+  },
+  {
+    type: 'select',
+    label: 'Filler material',
+    name: 'fillerMaterial',
+    options: [
+      {
+        value: FillerMaterialsEnum.E316L,
+        visibleIf: {
+          passProcessType: PassProcessTypesEnum.SMAW
+        }
+      },
+      {
+        value: FillerMaterialsEnum.E7018,
+        visibleIf: {
+          passProcessType: PassProcessTypesEnum.SMAW
+        }
+      },
+      {
+        value: FillerMaterialsEnum.E71T1,
+        visibleIf: {
+          passProcessType: PassProcessTypesEnum.FCAW
+        }
+      },
+      {
+        value: FillerMaterialsEnum.E71T7,
+        visibleIf: {
+          passProcessType: PassProcessTypesEnum.FCAW
+        }
+      },
+      {
+        value: FillerMaterialsEnum.ER316LSI,
+        visibleIf: {
+          passProcessType: PassProcessTypesEnum.GMAW
+        }
+      },
+      {
+        value: FillerMaterialsEnum.ER70S6,
+        visibleIf: {
+          passProcessType: PassProcessTypesEnum.GMAW
+        }
+      }
+    ],
+    validations: [
+      {
+        name: 'required',
+        validator: Validators.required,
+        message: 'Filler material required'
+      }
+    ]
+  },
+  {
+    type: 'select',
+    label: 'Filler material diameter',
+    name: 'fillerMaterialDiameter',
+    options: [
+      { value: FillerMaterialDiametersEnum.MM1 },
+      { value: FillerMaterialDiametersEnum.MM2 },
+      { value: FillerMaterialDiametersEnum.MM3 }
+    ],
+    validations: [
+      {
+        name: 'required',
+        validator: Validators.required,
+        message: 'Filler material diameter required'
+      }
+    ]
+  },
+  {
+    type: 'select',
+    label: 'Gas type',
+    name: 'gasType',
+    options: [
+      {
+        value: GasTypes.ArgonCO2,
+        visibleIf: [
+          { passProcessType: PassProcessTypesEnum.GMAW },
+          { passProcessType: PassProcessTypesEnum.FCAW }
+        ]
+      },
+      {
+        value: GasTypes.Argon,
+        visibleIf: {
+          passProcessType: PassProcessTypesEnum.GMAW
+        }
+      },
+      {
+        value: GasTypes.CO2,
+        visibleIf: {
+          passProcessType: PassProcessTypesEnum.FCAW
+        }
+      },
+      {
+        value: GasTypes.NA,
+        visibleIf: {
+          passProcessType: PassProcessTypesEnum.SMAW
+        }
+      }
+    ],
+    validations: [
+      {
+        name: 'required',
+        validator: Validators.required,
+        message: 'Gas type required'
       }
     ]
   },
