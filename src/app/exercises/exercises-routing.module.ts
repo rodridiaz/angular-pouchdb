@@ -13,18 +13,24 @@ const routes: Routes = [
     }
   },
   {
-    path: 'exercises/add-new',
+    path: 'exercise/add-new',
     component: AddNewComponent,
-    data: {
-      title: 'Add new exercise'
-    }
+    data: { title: 'Add new exercise' }
   },
   {
     path: 'exercise',
     component: ExerciseComponent,
     data: {
       title: 'Exercise Details'
-    }
+    },
+    children: [
+      { path: '', redirectTo: '/exercises', pathMatch: 'full' },
+      {
+        path: ':id',
+        component: ExerciseComponent,
+        data: { title: 'Edit Exercise' }
+      }
+    ]
   }
 ];
 

@@ -1,2 +1,6 @@
-<app-dynamic-form [fields]="fieldsConfig" (submit)="submit($event)">
+<app-dynamic-form
+  [fields]="fieldsConfig"
+  [data]="data"
+  (update)="submit($event)"
+>
 </app-dynamic-form>

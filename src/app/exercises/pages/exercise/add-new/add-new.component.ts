@@ -19,7 +19,7 @@ const STEPS_CONFIG: StepConfig[] = [
     includedFields: [
       'minScore',
       'jointTypePosition',
-      'jointTypeMaterial',
+      'jointTypeBaseMaterial',
       'wizardPreviousButton',
       'wizardNextButton',
       'saveButton'
@@ -124,8 +124,8 @@ const FIELDS_CONFIG: FieldConfig[] = [
   },
   {
     type: 'select',
-    label: 'Joint type material',
-    name: 'jointTypeMaterial',
+    label: 'Joint type base material',
+    name: 'jointTypeBaseMaterial',
     options: [
       { value: JointTypeBaseMaterialsEnum.CarbonSteel },
       { value: JointTypeBaseMaterialsEnum.StainlessSteel }
@@ -134,7 +134,7 @@ const FIELDS_CONFIG: FieldConfig[] = [
       {
         name: 'required',
         validator: Validators.required,
-        message: 'Joint type material required'
+        message: 'Joint type base material required'
       }
     ]
   },

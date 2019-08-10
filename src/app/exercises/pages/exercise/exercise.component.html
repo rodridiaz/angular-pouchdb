@@ -1,1 +1,4 @@
-<app-exercise-details [fieldsConfig]="fieldsConfig"></app-exercise-details>
+<app-exercise-details
+  [fieldsConfig]="fieldsConfig"
+  [data]="exerciseDetail$ | async"
+></app-exercise-details>

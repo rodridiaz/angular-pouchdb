@@ -22,8 +22,10 @@ import { OptionBuilder } from '../utils/option-builder';
 })
 export class DynamicFormComponent implements OnInit {
   @Input() fields: FieldConfig[] = [];
+  @Input() data?: any;
 
-  @Output() submit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() submit?: EventEmitter<any> = new EventEmitter<any>();
+  @Output() update?: EventEmitter<any> = new EventEmitter<any>();
 
   form: FormGroup;
 
@@ -35,6 +37,9 @@ export class DynamicFormComponent implements OnInit {
   ngOnInit() {
     this.form = this.createControl();
     this.onChanges();
+    if (!!this.data) {
+      this.form.patchValue(this.data);
+    }
   }
 
   onChanges(): void {
@@ -48,7 +53,11 @@ export class DynamicFormComponent implements OnInit {
     event.preventDefault();
     event.stopPropagation();
     if (this.form.valid) {
-      this.submit.emit(this.form.value);
+      if (!!this.data) {
+        this.update.emit(this.form.value);
+      } else {
+        this.submit.emit(this.form.value);
+      }
     } else {
       this.validateAllFormFields(this.form);
     }
@@ -57,7 +66,7 @@ export class DynamicFormComponent implements OnInit {
   createControl() {
     const group = this.fb.group({});
     this.fields.forEach(field => {
-      if (field.type === 'button') {
+      if (['button', 'submit'].indexOf(field.type) !== -1) {
         return;
       }
       const control = this.fb.control(

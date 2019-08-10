@@ -1,12 +1,12 @@
 export interface Exercise {
-  id: number;
+  id: string;
   name: string;
   minScore: number;
   creationDate: string;
 }
 
 export interface ExerciseDetail {
-  id: number;
+  id: string;
   name: string;
   minScore: number;
   jointType: string;

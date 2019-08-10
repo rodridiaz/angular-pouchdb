@@ -4,8 +4,13 @@ import { Validators } from '@angular/forms';
 import {
   JointTypesEnumn,
   JointTypePositionsEnum,
-  JointTypeBaseMaterialsEnum
+  JointTypeBaseMaterialsEnum,
+  ExerciseDetail
 } from '../../shared/exercise';
+import { Observable } from 'rxjs';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ExerciseService } from '../../shared/exercise.service';
+import { switchMap } from 'rxjs/operators';
 
 const REG_CONFIG: FieldConfig[] = [
   {
@@ -114,8 +119,8 @@ const REG_CONFIG: FieldConfig[] = [
   },
   {
     type: 'select',
-    label: 'Joint type material',
-    name: 'jointTypeMaterial',
+    label: 'Joint type base material',
+    name: 'jointTypeBaseMaterial',
     options: [
       { value: JointTypeBaseMaterialsEnum.CarbonSteel },
       { value: JointTypeBaseMaterialsEnum.StainlessSteel }
@@ -124,7 +129,7 @@ const REG_CONFIG: FieldConfig[] = [
       {
         name: 'required',
         validator: Validators.required,
-        message: 'Joint type material required'
+        message: 'Joint type base material required'
       }
     ]
   },
@@ -143,9 +148,20 @@ const REG_CONFIG: FieldConfig[] = [
 export class ExerciseComponent implements OnInit {
   fieldsConfig: FieldConfig[] = [];
 
-  constructor() {}
+  exerciseDetail$: Observable<ExerciseDetail>;
+
+  constructor(
+    private route: ActivatedRoute,
+    private exerciseService: ExerciseService
+  ) {}
 
   ngOnInit() {
     this.fieldsConfig = REG_CONFIG;
+
+    this.exerciseDetail$ = this.route.paramMap.pipe(
+      switchMap((params: ParamMap) =>
+        this.exerciseService.getExerciseDetail(params.get('id'))
+      )
+    );
   }
 }
