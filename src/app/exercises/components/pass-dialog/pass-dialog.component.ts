@@ -8,7 +8,7 @@ import {
   FillerMaterialDiametersEnum,
   GasTypes
 } from '../../shared/exercise';
-import { FieldConfig } from 'src/app/core/ui/form/field.interface';
+import { FieldConfig } from '../../../core/ui/form/field.interface';
 
 @Component({
   selector: 'app-pass-dialog',

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Pass } from '../../shared/exercise';
-import { DynamicTableComponent } from 'src/app/core/ui';
+import { DynamicTableComponent } from '../../../core/ui';
 import { MatDialogConfig, MatDialog, MatSnackBar } from '@angular/material';
 import { PassDialogComponent } from '../pass-dialog/pass-dialog.component';
 import { Observable } from 'rxjs';

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
 import { ExerciseDetail, Exercise } from './exercise';
-import { PouchdbService } from 'src/app/core/pouchdb/pouchdb.service';
+import { PouchdbService } from '../../core/pouchdb/pouchdb.service';
 import { map } from 'rxjs/operators';
 
 @Injectable({

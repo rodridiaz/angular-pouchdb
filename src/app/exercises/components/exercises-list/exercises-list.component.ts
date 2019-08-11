@@ -7,7 +7,7 @@ import {
 } from '@angular/material';
 import { Exercise } from '../../shared/exercise';
 import { Observable } from 'rxjs';
-import { DynamicTableComponent } from 'src/app/core/ui';
+import { DynamicTableComponent } from '../../../core/ui';
 import { ExerciseService } from '../../shared/exercise.service';
 
 @Component({
