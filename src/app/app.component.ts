@@ -10,14 +10,16 @@ import { filter, map } from 'rxjs/operators';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  title$: Observable<string>;
+
+  appTitle = 'Angular PouchDB App';
+
   constructor(private router: Router, private titleService: Title) {
-    this.title = this.router.events.pipe(
+    this.title$ = this.router.events.pipe(
       filter(event => event instanceof NavigationEnd),
       map(() => this.getDeepestTitle(this.router.routerState.snapshot.root))
     );
   }
-  appTitle = 'Angular PouchDB App';
-  title: Observable<string>;
 
   private getDeepestTitle(routeSnapshot: ActivatedRouteSnapshot) {
     let title = routeSnapshot.data ? routeSnapshot.data['title'] : '';

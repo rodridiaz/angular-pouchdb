@@ -21,7 +21,6 @@ export class DynamicFormWizardComponent implements OnInit {
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
 
   submitted: Boolean = false;
-
   form: FormGroup;
 
   get value() {

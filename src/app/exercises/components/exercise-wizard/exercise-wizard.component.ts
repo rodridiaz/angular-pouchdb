@@ -3,13 +3,13 @@ import {
   ViewChild,
   Input,
   EventEmitter,
-  Output,
-  ModuleWithComponentFactories
+  Output
 } from '@angular/core';
+import * as moment from 'moment';
+
 import { StepConfig, FieldConfig } from '../../../core/ui/form/field.interface';
 import { DynamicFormWizardComponent } from '../../../core/ui';
 import { ExerciseDetail } from '../../shared/exercise';
-import * as moment from 'moment';
 
 @Component({
   selector: 'app-exercise-wizard',
@@ -38,7 +38,7 @@ export class ExerciseWizardComponent {
     this.submitted.emit(payload);
   }
 
-  // Helpers
+  // Helper
   private newGuid(): string {
     function s4() {
       return Math.floor((1 + Math.random()) * 0x10000)

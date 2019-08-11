@@ -1,4 +1,4 @@
-import { Injectable, EventEmitter } from '@angular/core';
+import { Injectable } from '@angular/core';
 
 import PouchDB from 'pouchdb';
 
@@ -8,7 +8,6 @@ import PouchDB from 'pouchdb';
 export class PouchdbService {
   private db: any;
   private isInstantiated: boolean;
-  private listener: EventEmitter<any> = new EventEmitter();
 
   public constructor() {
     if (!this.isInstantiated) {
@@ -25,7 +24,7 @@ export class PouchdbService {
     return this.db.get(id).then(result => result, error => error);
   }
 
-  public put(id: string, document: any) {
+  public put(id: string, document: any): Promise<any> {
     let doc = null;
     return this.get(id).then(
       result => {

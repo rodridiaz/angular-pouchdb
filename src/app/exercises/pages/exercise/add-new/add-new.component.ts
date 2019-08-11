@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
+
 import {
   StepConfig,
   FieldConfig
 } from '../../../../core/ui/form/field.interface';
 import { ExerciseDetail } from '../../../shared/exercise';
 import { ExerciseService } from '../../../shared/exercise.service';
-import { MatSnackBar } from '@angular/material';
-import { Router } from '@angular/router';
 import { AddNewFieldsConfig, AddNewStepsConfig } from './add-new.config';
 
 @Component({

@@ -16,9 +16,6 @@ import { Observable } from 'rxjs';
   styles: [':host table { width: 100%; } .empty-state { text-align: center; }']
 })
 export class DynamicTableComponent implements OnInit {
-  displayedColumns: string[];
-  dataSource = new MatTableDataSource<any>();
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -29,6 +26,9 @@ export class DynamicTableComponent implements OnInit {
   @Input() showEditButton?: Boolean = true;
 
   @Output() removedElement?: EventEmitter<any> = new EventEmitter<any>();
+
+  displayedColumns: string[];
+  dataSource = new MatTableDataSource<any>();
 
   constructor(private cdr: ChangeDetectorRef) {}
 

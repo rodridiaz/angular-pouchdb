@@ -1,12 +1,8 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import {
-  MatPaginator,
-  MatSort,
-  MatTableDataSource,
-  MatSnackBar
-} from '@angular/material';
-import { Exercise } from '../../shared/exercise';
+import { MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs';
+
+import { Exercise } from '../../shared/exercise';
 import { DynamicTableComponent } from '../../../core/ui';
 import { ExerciseService } from '../../shared/exercise.service';
 

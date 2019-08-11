@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
 import { FieldConfig } from '../../../core/ui/form/field.interface';
 import { ExerciseDetail, Pass } from '../../shared/exercise';
-import { Observable, of } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
 import { ExerciseFieldsConfig } from './exercise.config';
 
 @Component({
@@ -12,13 +13,11 @@ import { ExerciseFieldsConfig } from './exercise.config';
   styleUrls: ['./exercise.component.css']
 })
 export class ExerciseComponent implements OnInit {
-  fieldsConfig: FieldConfig[] = [];
-
+  exerciseDetail$: Observable<ExerciseDetail>;
   passes$: Observable<Pass[]>;
 
+  fieldsConfig: FieldConfig[] = [];
   maxPassesAllowed: Number = 4;
-
-  exerciseDetail$: Observable<ExerciseDetail>;
 
   constructor(private route: ActivatedRoute) {}
 

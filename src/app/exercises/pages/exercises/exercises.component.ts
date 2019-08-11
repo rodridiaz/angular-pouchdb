@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-
-import { Exercise } from '../../shared/exercise';
-import { ExerciseService } from '../../shared/exercise.service';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 
-const COLUMNS: any[] = [
+import { Exercise } from '../../shared/exercise';
+import { ExerciseService } from '../../shared/exercise.service';
+
+const COLUMNS_DEFINITION: any[] = [
   { columnDef: 'name', header: 'name', dataName: row => row.name },
   {
     columnDef: 'minScore',
@@ -26,12 +26,13 @@ const COLUMNS: any[] = [
 })
 export class ExercisesComponent implements OnInit {
   rows$: Observable<Exercise[]>;
+
   columns: any[] = [];
 
   constructor(private service: ExerciseService) {}
 
   ngOnInit() {
     this.rows$ = this.service.getExercises();
-    this.columns = COLUMNS;
+    this.columns = COLUMNS_DEFINITION;
   }
 }

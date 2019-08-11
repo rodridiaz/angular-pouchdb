@@ -1,5 +1,6 @@
-import { isVisible } from './visible-if';
 import { FormGroup } from '@angular/forms';
+
+import { isVisible } from './visible-if';
 import { FieldConfig } from '../field.interface';
 
 export class OptionBuilder {

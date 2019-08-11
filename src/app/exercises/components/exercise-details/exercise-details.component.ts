@@ -1,9 +1,10 @@
 import { Component, ViewChild, Input } from '@angular/core';
+import { MatSnackBar } from '@angular/material';
+
 import { FieldConfig } from '../../../core/ui/form/field.interface';
 import { DynamicFormComponent } from '../../../core/ui';
 import { ExerciseDetail } from '../../shared/exercise';
 import { ExerciseService } from '../../shared/exercise.service';
-import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-exercise-details',
@@ -21,10 +22,10 @@ export class ExerciseDetailsComponent {
     private snackBar: MatSnackBar
   ) {}
 
-  submit(value: { [name: string]: any }) {
+  submit(value: any) {
     value.id = this.data.id;
     value.passes = this.data.passes;
-    console.log('Update exercise with value: ' + JSON.stringify(value));
+
     this.service.addExercise(<ExerciseDetail>value).subscribe((res: any) => {
       if (res.ok) {
         this.snackBar.open('Exercise updated 🙂', null, {

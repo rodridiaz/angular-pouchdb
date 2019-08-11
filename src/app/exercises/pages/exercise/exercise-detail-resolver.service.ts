@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { ExerciseDetail } from '../../shared/exercise';
 import { Router, ActivatedRouteSnapshot, Resolve } from '@angular/router';
-import { ExerciseService } from '../../shared/exercise.service';
 import { Observable, EMPTY, of } from 'rxjs';
 import { take, mergeMap } from 'rxjs/operators';
+
+import { ExerciseService } from '../../shared/exercise.service';
+import { ExerciseDetail } from '../../shared/exercise';
 
 @Injectable({
   providedIn: 'root'
