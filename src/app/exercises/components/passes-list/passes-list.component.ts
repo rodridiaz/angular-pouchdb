@@ -62,6 +62,9 @@ export class PassesListComponent implements OnInit {
     const dialogRef = this.dialog.open(PassDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe((pass: Pass) => {
+      if (!pass) {
+        return;
+      }
       this.table.dataSource.data.push(pass);
       this.table.dataSource._updateChangeSubscription();
     });

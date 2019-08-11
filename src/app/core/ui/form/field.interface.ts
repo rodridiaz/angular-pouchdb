@@ -7,6 +7,7 @@ export interface FieldConfig {
   label?: string;
   name?: string;
   inputType?: string;
+  disabled?: boolean;
   options?:
     | {
         value: any;

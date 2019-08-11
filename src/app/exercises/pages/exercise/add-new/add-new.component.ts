@@ -333,7 +333,7 @@ export class AddNewComponent implements OnInit {
       if (res.ok) {
         this.snackBar
           .open('Exercise created 🙂', 'Go to exercises', {
-            duration: 2000
+            duration: 4000
           })
           .onAction()
           .subscribe(() => this.router.navigate(['/exercises']));

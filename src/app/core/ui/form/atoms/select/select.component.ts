@@ -10,6 +10,7 @@ import { FieldConfig } from '../../field.interface';
       <mat-select
         [placeholder]="field.label"
         [formControlName]="field.name"
+        [disabled]="field.disabled"
         required
       >
         <mat-option

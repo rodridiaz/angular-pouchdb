@@ -12,6 +12,7 @@ import { FieldConfig } from '../../field.interface';
         [formControlName]="field.name"
         [placeholder]="field.label"
         [type]="field.inputType"
+        [disabled]="field.disabled"
         required
       />
 

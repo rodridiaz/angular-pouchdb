@@ -53,6 +53,7 @@ const REG_CONFIG: FieldConfig[] = [
     type: 'select',
     label: 'Joint type',
     name: 'jointType',
+    disabled: true,
     options: [
       { value: JointTypesEnumn.BasedOnPlate },
       { value: JointTypesEnumn.T },
@@ -70,6 +71,7 @@ const REG_CONFIG: FieldConfig[] = [
     type: 'select',
     label: 'Joint type position',
     name: 'jointTypePosition',
+    disabled: true,
     options: [
       {
         value: JointTypePositionsEnum.F1,
@@ -121,6 +123,7 @@ const REG_CONFIG: FieldConfig[] = [
     type: 'select',
     label: 'Joint type base material',
     name: 'jointTypeBaseMaterial',
+    disabled: true,
     options: [
       { value: JointTypeBaseMaterialsEnum.CarbonSteel },
       { value: JointTypeBaseMaterialsEnum.StainlessSteel }

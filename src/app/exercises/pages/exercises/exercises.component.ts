@@ -15,7 +15,7 @@ const COLUMNS: any[] = [
   {
     columnDef: 'createdDate',
     header: 'creation date',
-    dataName: row => moment(row.createdDate).format('YYYY-MM-DD HH:mm')
+    dataName: row => moment(row.createdDate).format('lll')
   }
 ];
 
