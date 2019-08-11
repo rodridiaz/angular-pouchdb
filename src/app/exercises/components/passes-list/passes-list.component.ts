@@ -15,22 +15,22 @@ const COLUMNS: any[] = [
   {
     columnDef: 'fillerMaterial',
     header: 'Filler material',
-    dataName: row => `${row.fillerMaterial}`
+    dataName: row => row.fillerMaterial
   },
   {
     columnDef: 'fillerMaterialDiameter',
     header: 'Filler material Diameter',
-    dataName: row => `${row.fillerMaterialDiameter}`
+    dataName: row => row.fillerMaterialDiameter
   },
   {
     columnDef: 'gasType',
     header: 'Gas type',
-    dataName: row => `${row.gasType}`
+    dataName: row => row.gasType
   },
   {
     columnDef: 'passProcessType',
     header: 'Pass process',
-    dataName: row => `${row.passProcessType}`
+    dataName: row => row.passProcessType
   }
 ];
 

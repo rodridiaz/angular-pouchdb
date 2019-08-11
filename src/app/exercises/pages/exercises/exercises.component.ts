@@ -31,12 +31,12 @@ const EXAMPLE_COLUMNS: any[] = [
   {
     columnDef: 'minScore',
     header: 'minimum score',
-    dataName: row => `${row.minScore}`
+    dataName: row => row.minScore
   },
   {
     columnDef: 'creationDate',
     header: 'creation date',
-    dataName: row => `${row.creationDate}`
+    dataName: row => row.creationDate
   }
 ];
 

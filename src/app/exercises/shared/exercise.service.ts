@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
-import { EXERCISE_DETAIL } from './mock-exercise-detail';
+import { EXERCISE_DETAILS } from './mock-exercise-detail';
 import { of, Observable } from 'rxjs';
 import { ExerciseDetail } from './exercise';
 
@@ -11,6 +10,6 @@ export class ExerciseService {
   constructor() {}
 
   getExerciseDetail(id: string): Observable<ExerciseDetail> {
-    return of(EXERCISE_DETAIL).pipe(map(response => response));
+    return of(EXERCISE_DETAILS.find(ex => ex.id === id));
   }
 }

@@ -13,7 +13,8 @@ import {
   MatSelectModule,
   MatCardModule,
   MatDividerModule,
-  MatDialogModule
+  MatDialogModule,
+  MatIconModule
 } from '@angular/material';
 
 import { ExercisesRoutingModule } from './exercises-routing.module';
@@ -34,6 +35,7 @@ import { ExerciseWizardComponent } from './components/exercise-wizard/exercise-w
 import { AddNewComponent } from './pages/exercise/add-new/add-new.component';
 import { PassesListComponent } from './components/passes-list/passes-list.component';
 import { PassDialogComponent } from './components/pass-dialog/pass-dialog.component';
+import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.component';
 
 @NgModule({
   imports: [
@@ -51,7 +53,8 @@ import { PassDialogComponent } from './components/pass-dialog/pass-dialog.compon
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    MatIconModule
   ],
   declarations: [
     DynamicFormComponent,
@@ -68,7 +71,8 @@ import { PassDialogComponent } from './components/pass-dialog/pass-dialog.compon
     ExerciseWizardComponent,
     AddNewComponent,
     PassesListComponent,
-    PassDialogComponent
+    PassDialogComponent,
+    PageNotFoundComponent
   ],
   entryComponents: [
     ButtonComponent,

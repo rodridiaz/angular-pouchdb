@@ -29,7 +29,7 @@ export class ExerciseDetailResolverService implements Resolve<ExerciseDetail> {
           return of(exercise);
         } else {
           // id not found
-          this.router.navigate(['/exercises']);
+          this.router.navigate(['/404']);
           return EMPTY;
         }
       })
