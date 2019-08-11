@@ -13,6 +13,7 @@ import {
 } from 'src/app/exercises/shared/exercise';
 import { ExerciseService } from 'src/app/exercises/shared/exercise.service';
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 
 const STEPS_CONFIG: StepConfig[] = [
   {
@@ -318,7 +319,8 @@ export class AddNewComponent implements OnInit {
 
   constructor(
     private service: ExerciseService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -329,9 +331,12 @@ export class AddNewComponent implements OnInit {
   submit(value: ExerciseDetail) {
     this.service.addExercise(value).subscribe((res: any) => {
       if (res.ok) {
-        this.snackBar.open('Exercise created 🙂', null, {
-          duration: 2000
-        });
+        this.snackBar
+          .open('Exercise created 🙂', 'Go to exercises', {
+            duration: 2000
+          })
+          .onAction()
+          .subscribe(() => this.router.navigate(['/exercises']));
       }
     });
   }
