@@ -2,6 +2,8 @@
   <mat-vertical-stepper [linear]="true" #stepper formArrayName="formArray">
     <!-- Step -->
     <mat-step
+      [editable]="!submitted"
+      [completed]="!submitted"
       [formGroupName]="i"
       [stepControl]="form.get('formArray').get([i])"
       *ngFor="let step of steps; let i = index"

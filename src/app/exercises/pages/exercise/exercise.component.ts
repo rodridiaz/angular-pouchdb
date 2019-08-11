@@ -148,6 +148,10 @@ const REG_CONFIG: FieldConfig[] = [
 export class ExerciseComponent implements OnInit {
   fieldsConfig: FieldConfig[] = [];
 
+  passes$: Observable<Pass[]>;
+
+  maxPassesAllowed: Number = 4;
+
   exerciseDetail$: Observable<ExerciseDetail>;
 
   constructor(private route: ActivatedRoute) {}
@@ -157,6 +161,10 @@ export class ExerciseComponent implements OnInit {
 
     this.exerciseDetail$ = this.route.data.pipe(
       switchMap(data => of(data.exerciseDetail))
+    );
+
+    this.passes$ = this.route.data.pipe(
+      switchMap(data => of(data.exerciseDetail.passes))
     );
   }
 }

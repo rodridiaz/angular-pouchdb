@@ -8,8 +8,11 @@ import {
   PassProcessTypesEnum,
   FillerMaterialsEnum,
   FillerMaterialDiametersEnum,
-  GasTypes
+  GasTypes,
+  ExerciseDetail
 } from 'src/app/exercises/shared/exercise';
+import { ExerciseService } from 'src/app/exercises/shared/exercise.service';
+import { MatSnackBar } from '@angular/material';
 
 const STEPS_CONFIG: StepConfig[] = [
   {
@@ -313,10 +316,23 @@ export class AddNewComponent implements OnInit {
   fieldsConfig: FieldConfig[] = [];
   stepsConfig: StepConfig[] = [];
 
-  constructor() {}
+  constructor(
+    private service: ExerciseService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.fieldsConfig = FIELDS_CONFIG;
     this.stepsConfig = STEPS_CONFIG;
+  }
+
+  submit(value: ExerciseDetail) {
+    this.service.addExercise(value).subscribe((res: any) => {
+      if (res.ok) {
+        this.snackBar.open('Exercise created 🙂', null, {
+          duration: 2000
+        });
+      }
+    });
   }
 }

@@ -2,6 +2,7 @@ package.json
 package-lock.json
 dist
 node_modules
+**/index.html
 .angulardoc.json
 .vscode/*
 **/tslint.json

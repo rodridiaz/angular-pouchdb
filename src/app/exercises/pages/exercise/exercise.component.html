@@ -2,4 +2,7 @@
   [fieldsConfig]="fieldsConfig"
   [data]="exerciseDetail$ | async"
 ></app-exercise-details>
-<app-passes-list [rows]="(exerciseDetail$ | async).passes"></app-passes-list>
+<app-passes-list
+  [rows$]="passes$"
+  [maxPassesAllowed]="maxPassesAllowed"
+></app-passes-list>

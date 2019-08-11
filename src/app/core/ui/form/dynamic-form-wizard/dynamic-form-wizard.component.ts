@@ -20,6 +20,8 @@ export class DynamicFormWizardComponent implements OnInit {
 
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
 
+  submitted: Boolean = false;
+
   form: FormGroup;
 
   get value() {
@@ -45,6 +47,7 @@ export class DynamicFormWizardComponent implements OnInit {
     event.stopPropagation();
     if (this.form.valid) {
       this.submit.emit(this.form.value);
+      this.submitted = true;
     } else {
       this.validateAllFormFields(this.form);
     }

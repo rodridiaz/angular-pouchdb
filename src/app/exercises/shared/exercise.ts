@@ -1,14 +1,17 @@
+import * as moment from 'moment';
+
 export interface Exercise {
   id: string;
   name: string;
   minScore: number;
-  creationDate: string;
+  createdDate: moment.Moment;
 }
 
 export interface ExerciseDetail {
   id: string;
   name: string;
   minScore: number;
+  createdDate: moment.Moment;
   jointType: string;
   jointTypePosition: string;
   jointTypeBaseMaterial: string;

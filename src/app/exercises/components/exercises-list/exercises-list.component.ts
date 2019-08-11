@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 import { Exercise } from '../../shared/exercise';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-exercises-list',
@@ -8,7 +9,7 @@ import { Exercise } from '../../shared/exercise';
   styleUrls: ['./exercises-list.component.css']
 })
 export class ExercisesListComponent implements OnInit {
-  @Input() rows: Exercise[];
+  @Input() rows$: Observable<Exercise[]>;
   @Input() columns: any[];
 
   ngOnInit() {}

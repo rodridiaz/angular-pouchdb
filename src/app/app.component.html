@@ -1,4 +1,11 @@
-<mat-toolbar color="primary">{{ appTitle }}</mat-toolbar>
+<mat-toolbar color="primary">
+  <span
+    ><a routerLink="/">{{ appTitle }}</a></span
+  >
+  <!-- This fills the remaining space of the current row -->
+  <span class="fill-space"></span>
+  <span><a routerLink="/">Go to home</a></span>
+</mat-toolbar>
 
 <main>
   <div class="container">
@@ -7,6 +14,7 @@
         <mat-card-title fxLayout.gt-xs="row" fxLayout.xs="column">
           <h4>{{ title | async }}</h4>
         </mat-card-title>
+
         <mat-card-content>
           <router-outlet></router-outlet>
         </mat-card-content>

@@ -1,15 +1,9 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  Output,
-  EventEmitter,
-  ViewChild
-} from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { Pass } from '../../shared/exercise';
 import { DynamicTableComponent } from 'src/app/core/ui';
-import { MatDialogConfig, MatDialog } from '@angular/material';
+import { MatDialogConfig, MatDialog, MatSnackBar } from '@angular/material';
 import { PassDialogComponent } from '../pass-dialog/pass-dialog.component';
+import { Observable } from 'rxjs';
 
 const COLUMNS: any[] = [
   {
@@ -40,34 +34,41 @@ const COLUMNS: any[] = [
   styleUrls: ['./passes-list.component.css']
 })
 export class PassesListComponent implements OnInit {
-  @Input() rows: Pass[];
+  @Input() rows$: Observable<Pass[]>;
+  @Input() maxPassesAllowed: Number;
   @ViewChild(DynamicTableComponent) table: DynamicTableComponent;
 
   columns: any[];
 
-  maxPasses = 4;
-
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.columns = COLUMNS;
   }
 
   addPass() {
+    if (this.table.dataSource.data.length === this.maxPassesAllowed) {
+      this.snackBar.open(
+        `Maximum passes allowed: ${this.maxPassesAllowed} 🙏`,
+        null,
+        {
+          duration: 2000
+        }
+      );
+      return;
+    }
     const dialogConfig = new MatDialogConfig();
     dialogConfig.autoFocus = true;
     const dialogRef = this.dialog.open(PassDialogComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(val => {
-      console.log('Dialog output:', val);
-
-      this.rows.push({
-        passProcessType: 'FCAW',
-        fillerMaterial: 'E71T-1',
-        fillerMaterialDiameter: '3.0mm',
-        gasType: 'CO2'
-      });
+    dialogRef.afterClosed().subscribe((pass: Pass) => {
+      this.table.dataSource.data.push(pass);
       this.table.dataSource._updateChangeSubscription();
     });
+  }
+
+  removedElement(data: { index: number; element: any }) {
+    this.table.dataSource.data.splice(data.index, 1);
+    this.table.dataSource._updateChangeSubscription();
   }
 }

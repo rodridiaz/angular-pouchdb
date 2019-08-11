@@ -1,11 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ExerciseDetail } from '../../shared/exercise';
-import {
-  Router,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Resolve
-} from '@angular/router';
+import { Router, ActivatedRouteSnapshot, Resolve } from '@angular/router';
 import { ExerciseService } from '../../shared/exercise.service';
 import { Observable, EMPTY, of } from 'rxjs';
 import { take, mergeMap } from 'rxjs/operators';
@@ -14,23 +9,25 @@ import { take, mergeMap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ExerciseDetailResolverService implements Resolve<ExerciseDetail> {
-  constructor(private ex: ExerciseService, private router: Router) {}
+  constructor(
+    private exerciseService: ExerciseService,
+    private router: Router
+  ) {}
 
   resolve(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    route: ActivatedRouteSnapshot
   ): Observable<ExerciseDetail> | Observable<never> {
     const id = route.paramMap.get('id');
 
-    return this.ex.getExerciseDetail(id).pipe(
+    return this.exerciseService.getExercise(id).pipe(
       take(1),
-      mergeMap(exercise => {
-        if (exercise) {
-          return of(exercise);
-        } else {
+      mergeMap((response: any) => {
+        if (response.status === 404) {
           // id not found
           this.router.navigate(['/404']);
           return EMPTY;
+        } else {
+          return of(<ExerciseDetail>response);
         }
       })
     );

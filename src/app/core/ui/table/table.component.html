@@ -1,0 +1,47 @@
+<div *ngIf="rows$ | async; else loading">
+  <div *ngIf="dataSource.data.length; else empty">
+    <table mat-table [dataSource]="dataSource" matSort aria-label="Elements">
+      <!-- Column -->
+      <ng-container *ngFor="let col of columns" [matColumnDef]="col.columnDef">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ col.header | titlecase }}
+        </th>
+        <td mat-cell *matCellDef="let row">{{ col.dataName(row) }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actionButtons" *ngIf="showActionButtons">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element; let i = index">
+          <a
+            *ngIf="showEditButton"
+            mat-icon-button
+            color="primary"
+            routerLink="/exercise/{{ element.id }}"
+            ><mat-icon>edit</mat-icon></a
+          >
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="removeElement(i, element)"
+          >
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      *ngIf="showPagination"
+      [length]="dataSource.data.length"
+      [pageIndex]="0"
+      [pageSize]="10"
+      [pageSizeOptions]="[10, 20, 50, 100]"
+    >
+    </mat-paginator>
+  </div>
+</div>
+<ng-template #loading><mat-spinner></mat-spinner> </ng-template>
+<ng-template #empty><h3 class="empty-state">Empty</h3></ng-template>

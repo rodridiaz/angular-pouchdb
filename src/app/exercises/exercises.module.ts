@@ -14,7 +14,9 @@ import {
   MatCardModule,
   MatDividerModule,
   MatDialogModule,
-  MatIconModule
+  MatIconModule,
+  MatSnackBarModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 import { ExercisesRoutingModule } from './exercises-routing.module';
@@ -54,7 +56,9 @@ import { PageNotFoundComponent } from './pages/page-not-found/page-not-found.com
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule,
+    MatProgressSpinnerModule
   ],
   declarations: [
     DynamicFormComponent,
