@@ -332,11 +332,15 @@ export class AddNewComponent implements OnInit {
     this.service.addExercise(value).subscribe((res: any) => {
       if (res.ok) {
         this.snackBar
-          .open('Exercise created 🙂', 'Go to exercises', {
+          .open('Exercise created 🙂', 'Add more passes', {
             duration: 4000
           })
           .onAction()
-          .subscribe(() => this.router.navigate(['/exercises']));
+          .subscribe(() => this.router.navigate([`/exercise/${res.id}`]));
+      } else {
+        this.snackBar.open('Failed to create 😕', null, {
+          duration: 2000
+        });
       }
     });
   }

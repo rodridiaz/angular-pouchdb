@@ -34,6 +34,10 @@ export class ExercisesListComponent implements OnInit {
         this.snackBar.open('Exercise removed 👍', null, {
           duration: 2000
         });
+      } else {
+        this.snackBar.open('Failed to remove 😕', null, {
+          duration: 2000
+        });
       }
     });
 
