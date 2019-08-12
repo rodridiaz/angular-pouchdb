@@ -35,7 +35,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   @Output() submit?: EventEmitter<any> = new EventEmitter<any>();
   @Output() update?: EventEmitter<any> = new EventEmitter<any>();
 
-  private subscriptions: Subscription = new Subscription();
+  private subscription: Subscription = new Subscription();
 
   form: FormGroup;
 
@@ -54,7 +54,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptions.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   onChanges(): void {
@@ -119,7 +119,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
 
   controlSetSubscription(control, field): void {
     if (this.form.get(control) !== null) {
-      this.subscriptions.add(
+      this.subscription.add(
         this.form.get(control).valueChanges.subscribe(val => {
           OptionBuilder.setSelectOptionsStates(field, val, this.form);
         })

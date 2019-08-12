@@ -28,7 +28,7 @@ export class DynamicFormWizardComponent implements OnInit, OnDestroy {
 
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
 
-  private subscriptions: Subscription = new Subscription();
+  private subscription: Subscription = new Subscription();
 
   submitted: Boolean = false;
   form: FormGroup;
@@ -45,7 +45,7 @@ export class DynamicFormWizardComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptions.unsubscribe();
+    this.subscription.unsubscribe();
   }
 
   onChanges(): void {
@@ -137,7 +137,7 @@ export class DynamicFormWizardComponent implements OnInit, OnDestroy {
     controlOrdinal = this.getArrayIndexOfControl(control);
     fieldOrdinal = this.getArrayIndexOfControl(field.config.name);
 
-    this.subscriptions.add(
+    this.subscription.add(
       this.form
         .get('formArray')
         .get(controlOrdinal)
