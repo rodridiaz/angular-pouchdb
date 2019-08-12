@@ -9,6 +9,7 @@ import {
 } from '@angular/core';
 import { MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Observable } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-dynamic-table',
@@ -33,7 +34,9 @@ export class DynamicTableComponent implements OnInit {
   constructor(private cdr: ChangeDetectorRef) {}
 
   ngOnInit() {
-    this.rows$.subscribe(response => (this.dataSource.data = response));
+    this.rows$
+      .pipe(take(1))
+      .subscribe(response => (this.dataSource.data = response));
     this.cdr.detectChanges();
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

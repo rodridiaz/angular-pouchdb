@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { PassDialogComponent } from '../pass-dialog/pass-dialog.component';
 import { DynamicTableComponent } from '../../../core/ui';
 import { Pass } from '../../shared/exercise';
+import { take } from 'rxjs/operators';
 
 const COLUMNS_DEFINITION: any[] = [
   {
@@ -65,13 +66,16 @@ export class PassesListComponent implements OnInit {
 
     const dialogRef = this.dialog.open(PassDialogComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe((pass: Pass) => {
-      if (!pass) {
-        return;
-      }
-      this.table.dataSource.data.push(pass);
-      this.table.dataSource._updateChangeSubscription();
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(take(1))
+      .subscribe((pass: Pass) => {
+        if (!pass) {
+          return;
+        }
+        this.table.dataSource.data.push(pass);
+        this.table.dataSource._updateChangeSubscription();
+      });
   }
 
   removedElement(data: { index: number; element: any }) {

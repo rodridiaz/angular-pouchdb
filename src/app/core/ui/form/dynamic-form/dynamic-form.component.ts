@@ -1,8 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  OnDestroy
+} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { FieldConfig } from '../field.interface';
 import { OptionBuilder } from '../utils/option-builder';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
   exportAs: 'dynamicForm',
@@ -20,12 +28,14 @@ import { OptionBuilder } from '../utils/option-builder';
     </form>
   `
 })
-export class DynamicFormComponent implements OnInit {
+export class DynamicFormComponent implements OnInit, OnDestroy {
   @Input() fields: FieldConfig[] = [];
   @Input() data?: any;
 
   @Output() submit?: EventEmitter<any> = new EventEmitter<any>();
   @Output() update?: EventEmitter<any> = new EventEmitter<any>();
+
+  private subscriptions: Subscription = new Subscription();
 
   form: FormGroup;
 
@@ -41,6 +51,10 @@ export class DynamicFormComponent implements OnInit {
     if (!!this.data) {
       this.form.patchValue(this.data);
     }
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   onChanges(): void {
@@ -105,9 +119,11 @@ export class DynamicFormComponent implements OnInit {
 
   controlSetSubscription(control, field): void {
     if (this.form.get(control) !== null) {
-      this.form.get(control).valueChanges.subscribe(val => {
-        OptionBuilder.setSelectOptionsStates(field, val, this.form);
-      });
+      this.subscriptions.add(
+        this.form.get(control).valueChanges.subscribe(val => {
+          OptionBuilder.setSelectOptionsStates(field, val, this.form);
+        })
+      );
     }
   }
 }

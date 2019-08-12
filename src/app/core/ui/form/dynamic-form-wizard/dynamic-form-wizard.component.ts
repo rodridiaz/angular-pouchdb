@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  OnDestroy
+} from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -8,17 +15,20 @@ import {
 
 import { FieldConfig, StepConfig } from '../field.interface';
 import { OptionBuilder } from '../utils/option-builder';
+import { Subscription } from 'rxjs';
 
 @Component({
   exportAs: 'dynamicFormWizard',
   selector: 'app-dynamic-form-wizard',
   templateUrl: './dynamic-form-wizard.component.html'
 })
-export class DynamicFormWizardComponent implements OnInit {
+export class DynamicFormWizardComponent implements OnInit, OnDestroy {
   @Input() fields: FieldConfig[] = [];
   @Input() steps: StepConfig[] = [];
 
   @Output() submit: EventEmitter<any> = new EventEmitter<any>();
+
+  private subscriptions: Subscription = new Subscription();
 
   submitted: Boolean = false;
   form: FormGroup;
@@ -32,6 +42,10 @@ export class DynamicFormWizardComponent implements OnInit {
   ngOnInit() {
     this.form = this.createControl();
     this.onChanges();
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 
   onChanges(): void {
@@ -123,17 +137,19 @@ export class DynamicFormWizardComponent implements OnInit {
     controlOrdinal = this.getArrayIndexOfControl(control);
     fieldOrdinal = this.getArrayIndexOfControl(field.config.name);
 
-    this.form
-      .get('formArray')
-      .get(controlOrdinal)
-      .get(control)
-      .valueChanges.subscribe(val => {
-        if (val === null) {
-          return;
-        }
-        OptionBuilder.setSelectOptionsStates(field, val, <FormGroup>(
-          this.form.get('formArray').get(fieldOrdinal)
-        ));
-      });
+    this.subscriptions.add(
+      this.form
+        .get('formArray')
+        .get(controlOrdinal)
+        .get(control)
+        .valueChanges.subscribe(val => {
+          if (val === null) {
+            return;
+          }
+          OptionBuilder.setSelectOptionsStates(field, val, <FormGroup>(
+            this.form.get('formArray').get(fieldOrdinal)
+          ));
+        })
+    );
   }
 }

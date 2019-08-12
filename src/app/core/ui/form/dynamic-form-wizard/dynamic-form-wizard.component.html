@@ -3,7 +3,6 @@
     <!-- Step -->
     <mat-step
       [editable]="!submitted"
-      [completed]="!submitted"
       [formGroupName]="i"
       [stepControl]="form.get('formArray').get([i])"
       *ngFor="let step of steps; let i = index"
@@ -34,13 +33,30 @@
       </div>
       <br />
       <div>
-        <button mat-button mat-stroked-button matStepperPrevious type="button">
+        <button
+          mat-button
+          mat-stroked-button
+          matStepperPrevious
+          type="button"
+          [disabled]="submitted"
+        >
           Back
         </button>
-        <button mat-button (click)="stepper.reset()" type="button">
+        <button
+          mat-button
+          (click)="stepper.reset()"
+          type="button"
+          [disabled]="submitted"
+        >
           Reset
         </button>
-        <button mat-button mat-stroked-button color="primary" type="submit">
+        <button
+          mat-button
+          mat-stroked-button
+          color="primary"
+          type="submit"
+          [disabled]="submitted"
+        >
           Submit
         </button>
       </div>

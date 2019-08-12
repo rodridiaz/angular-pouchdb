@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, take } from 'rxjs/operators';
 
 import { FieldConfig } from '../../../core/ui/form/field.interface';
 import { ExerciseDetail, Pass } from '../../shared/exercise';
@@ -25,6 +25,7 @@ export class ExerciseComponent implements OnInit {
     this.fieldsConfig = ExerciseFieldsConfig;
 
     this.exerciseDetail$ = this.route.data.pipe(
+      take(1),
       switchMap(data => of(data.exerciseDetail))
     );
 

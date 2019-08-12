@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { Exercise } from '../../shared/exercise';
 import { DynamicTableComponent } from '../../../core/ui';
 import { ExerciseService } from '../../shared/exercise.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-exercises-list',
@@ -25,17 +26,20 @@ export class ExercisesListComponent implements OnInit {
   ngOnInit() {}
 
   removedElement(data: { index: number; element: any }) {
-    this.service.removeExercise(data.element.id).subscribe((res: any) => {
-      if (res.ok) {
-        this.snackBar.open('Exercise removed 👍', null, {
-          duration: 2000
-        });
-      } else {
-        this.snackBar.open('Failed to remove 😕', null, {
-          duration: 2000
-        });
-      }
-    });
+    this.service
+      .removeExercise(data.element.id)
+      .pipe(take(1))
+      .subscribe((res: any) => {
+        if (res.ok) {
+          this.snackBar.open('Exercise removed 👍', null, {
+            duration: 2000
+          });
+        } else {
+          this.snackBar.open('Failed to remove 😕', null, {
+            duration: 2000
+          });
+        }
+      });
 
     this.table.dataSource.data.splice(data.index, 1);
     this.table.dataSource._updateChangeSubscription();

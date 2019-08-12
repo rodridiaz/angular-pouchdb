@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, from } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 import { PouchdbService } from '../../core/pouchdb/pouchdb.service';
 import { ExerciseDetail, Exercise } from './exercise';
@@ -25,6 +25,7 @@ export class ExerciseService {
 
   getExercises(): Observable<Exercise[]> {
     return from(this.service.fetch()).pipe(
+      take(1),
       map((data: any) =>
         data.rows.map(item => {
           return {

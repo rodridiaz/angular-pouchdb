@@ -9,6 +9,7 @@ import {
 import { ExerciseDetail } from '../../../shared/exercise';
 import { ExerciseService } from '../../../shared/exercise.service';
 import { AddNewFieldsConfig, AddNewStepsConfig } from './add-new.config';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-new',
@@ -31,19 +32,23 @@ export class AddNewComponent implements OnInit {
   }
 
   submit(value: ExerciseDetail) {
-    this.service.addExercise(value).subscribe((res: any) => {
-      if (res.ok) {
-        this.snackBar
-          .open('Exercise created 🙂', 'Add more passes', {
-            duration: 4000
-          })
-          .onAction()
-          .subscribe(() => this.router.navigate([`/exercise/${res.id}`]));
-      } else {
-        this.snackBar.open('Failed to create 😕', null, {
-          duration: 2000
-        });
-      }
-    });
+    this.service
+      .addExercise(value)
+      .pipe(take(1))
+      .subscribe((res: any) => {
+        if (res.ok) {
+          this.snackBar
+            .open('Exercise created 🙂', 'Add more passes', {
+              duration: 4000
+            })
+            .onAction()
+            .pipe(take(1))
+            .subscribe(() => this.router.navigate([`/exercise/${res.id}`]));
+        } else {
+          this.snackBar.open('Failed to create 😕', null, {
+            duration: 2000
+          });
+        }
+      });
   }
 }
