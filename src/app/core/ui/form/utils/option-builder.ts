@@ -3,8 +3,18 @@ import { FormGroup } from '@angular/forms';
 import { isVisible } from './visible-if';
 import { FieldConfig } from '../field.interface';
 
+export interface OptionObject {
+  config: FieldConfig;
+  controlsToSubscribe:
+    | {
+        value: any;
+        visibleIf?: { [key: string]: any };
+      }[]
+    | any;
+}
+
 export class OptionBuilder {
-  static optionObjectBuilder = (fieldConfig: FieldConfig): any => {
+  static optionObjectBuilder = (fieldConfig: FieldConfig): OptionObject => {
     return {
       config: fieldConfig,
       controlsToSubscribe: fieldConfig.options
@@ -29,7 +39,7 @@ export class OptionBuilder {
     });
   };
 
-  static getSelectFieldsWithVisibleIf = (config: FieldConfig): FieldConfig => {
+  static selectFieldHasVisibleIf = (config: FieldConfig): FieldConfig => {
     return (
       config.options !== undefined &&
       config.options.some(option => option.visibleIf !== undefined)

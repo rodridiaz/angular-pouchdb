@@ -1,58 +1,28 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  OnDestroy
-} from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl
-} from '@angular/forms';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormBuilder, FormControl } from '@angular/forms';
 
-import { FieldConfig, StepConfig } from '../field.interface';
-import { OptionBuilder } from '../utils/option-builder';
-import { Subscription } from 'rxjs';
+import { StepConfig } from '../field.interface';
+import { OptionBuilder, OptionObject } from '../utils/option-builder';
+import { DynamicFormComponent } from '../dynamic-form/dynamic-form.component';
 
 @Component({
   exportAs: 'dynamicFormWizard',
   selector: 'app-dynamic-form-wizard',
   templateUrl: './dynamic-form-wizard.component.html'
 })
-export class DynamicFormWizardComponent implements OnInit, OnDestroy {
-  @Input() fields: FieldConfig[] = [];
+export class DynamicFormWizardComponent extends DynamicFormComponent
+  implements OnInit, OnDestroy {
   @Input() steps: StepConfig[] = [];
 
-  @Output() submit: EventEmitter<any> = new EventEmitter<any>();
-
-  private subscription: Subscription = new Subscription();
-
   submitted: Boolean = false;
-  form: FormGroup;
 
-  get value() {
-    return this.form.value;
+  constructor(private _fb: FormBuilder) {
+    super(_fb);
   }
-
-  constructor(private fb: FormBuilder) {}
 
   ngOnInit() {
     this.form = this.createControl();
-    this.onChanges();
-  }
-
-  ngOnDestroy() {
-    this.subscription.unsubscribe();
-  }
-
-  onChanges(): void {
-    this.fields
-      .filter(config => OptionBuilder.getSelectFieldsWithVisibleIf(config))
-      .map(config => OptionBuilder.optionObjectBuilder(config))
-      .forEach(customOptionObject => this.setSubscriptions(customOptionObject));
+    this.subscribeControlsByVisibleIfConditions();
   }
 
   onSubmit(event: Event) {
@@ -66,11 +36,12 @@ export class DynamicFormWizardComponent implements OnInit, OnDestroy {
     }
   }
 
-  createControl() {
-    const array = this.fb.array([]);
-    this.steps.forEach(() => array.push(this.fb.group({})));
+  // create control and add it to its corresponding step
+  createControl(): FormGroup {
+    const array = this._fb.array([]);
+    this.steps.forEach(() => array.push(this._fb.group({})));
 
-    const group = this.fb.group({
+    const group = this._fb.group({
       formArray: array
     });
 
@@ -78,13 +49,13 @@ export class DynamicFormWizardComponent implements OnInit, OnDestroy {
       if (['button', 'submit'].indexOf(field.type) !== -1) {
         return;
       }
-      const control = this.fb.control(
+      const control = this._fb.control(
         field.value,
         this.bindValidations(field.validations || [])
       );
 
       let ordinal = [];
-      ordinal = this.getArrayIndexOfControl(field.name);
+      ordinal = this.getIndexOfArrayForm(field.name);
 
       this.addControlToStep(
         <FormGroup>group.get('formArray').get(ordinal),
@@ -95,7 +66,7 @@ export class DynamicFormWizardComponent implements OnInit, OnDestroy {
     return group;
   }
 
-  getArrayIndexOfControl(fieldName: string) {
+  getIndexOfArrayForm(fieldName: string): Number[][] {
     return this.steps
       .map((step, index) =>
         step.includedFields.filter(x => x === fieldName).map(() => index)
@@ -107,48 +78,33 @@ export class DynamicFormWizardComponent implements OnInit, OnDestroy {
     group.addControl(name, control);
   }
 
-  bindValidations(validations: any) {
-    if (validations.length > 0) {
-      const validList = [];
-      validations.forEach(valid => {
-        validList.push(valid.validator);
-      });
-      return Validators.compose(validList);
-    }
-    return null;
-  }
-
-  validateAllFormFields(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach(field => {
-      const control = formGroup.get(field);
-      control.markAsTouched({ onlySelf: true });
-    });
-  }
-
-  setSubscriptions(field): void {
-    field.controlsToSubscribe.forEach(controlToSuscribe => {
-      this.controlSetSubscription(controlToSuscribe, field);
-    });
-  }
-
-  controlSetSubscription(control, field): void {
-    let controlOrdinal = [];
-    let fieldOrdinal = [];
-    controlOrdinal = this.getArrayIndexOfControl(control);
-    fieldOrdinal = this.getArrayIndexOfControl(field.config.name);
+  controlSetSubscription(
+    controlToSuscribe,
+    customOptionObject: OptionObject
+  ): void {
+    let indexOfcontrolToSuscribe = [];
+    let indexOfcustomOptionObject = [];
+    indexOfcontrolToSuscribe = this.getIndexOfArrayForm(controlToSuscribe);
+    indexOfcustomOptionObject = this.getIndexOfArrayForm(
+      customOptionObject.config.name
+    );
 
     this.subscription.add(
       this.form
         .get('formArray')
-        .get(controlOrdinal)
-        .get(control)
+        .get(indexOfcontrolToSuscribe)
+        .get(controlToSuscribe)
         .valueChanges.subscribe(val => {
           if (val === null) {
             return;
           }
-          OptionBuilder.setSelectOptionsStates(field, val, <FormGroup>(
-            this.form.get('formArray').get(fieldOrdinal)
-          ));
+          OptionBuilder.setSelectOptionsStates(
+            customOptionObject,
+            val,
+            this.form
+              .get('formArray')
+              .get(indexOfcustomOptionObject) as FormGroup
+          );
         })
     );
   }

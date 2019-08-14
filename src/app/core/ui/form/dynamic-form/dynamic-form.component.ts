@@ -9,8 +9,8 @@ import {
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { FieldConfig } from '../field.interface';
-import { OptionBuilder } from '../utils/option-builder';
-import { Subject, Subscription } from 'rxjs';
+import { OptionBuilder, OptionObject } from '../utils/option-builder';
+import { Subscription } from 'rxjs';
 
 @Component({
   exportAs: 'dynamicForm',
@@ -35,7 +35,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   @Output() submit?: EventEmitter<any> = new EventEmitter<any>();
   @Output() update?: EventEmitter<any> = new EventEmitter<any>();
 
-  private subscription: Subscription = new Subscription();
+  subscription: Subscription = new Subscription();
 
   form: FormGroup;
 
@@ -47,7 +47,8 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.form = this.createControl();
-    this.onChanges();
+    this.subscribeControlsByVisibleIfConditions();
+
     if (!!this.data) {
       this.form.patchValue(this.data);
     }
@@ -57,11 +58,20 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  onChanges(): void {
+  subscribeControlsByVisibleIfConditions(): void {
     this.fields
-      .filter(config => OptionBuilder.getSelectFieldsWithVisibleIf(config))
-      .map(config => OptionBuilder.optionObjectBuilder(config))
-      .forEach(customOptionObject => this.setSubscriptions(customOptionObject));
+      // get all the dropdowns with a visibleIf
+      .filter((config: FieldConfig) =>
+        OptionBuilder.selectFieldHasVisibleIf(config)
+      )
+      // by each one, build object that include its dependant controls
+      .map((selectFieldsWithVisibleIf: FieldConfig) =>
+        OptionBuilder.optionObjectBuilder(selectFieldsWithVisibleIf)
+      )
+      //subscribe them to these dependant controls
+      .forEach((customOptionObject: OptionObject) =>
+        this.setSubscriptions(customOptionObject)
+      );
   }
 
   onSubmit(event: Event) {
@@ -78,7 +88,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  createControl() {
+  createControl(): FormGroup {
     const group = this.fb.group({});
     this.fields.forEach(field => {
       if (['button', 'submit'].indexOf(field.type) !== -1) {
@@ -111,17 +121,24 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     });
   }
 
-  setSubscriptions(field): void {
-    field.controlsToSubscribe.forEach(controlToSuscribe => {
-      this.controlSetSubscription(controlToSuscribe, field);
+  setSubscriptions(customOptionObject: OptionObject): void {
+    customOptionObject.controlsToSubscribe.forEach(controlToSuscribe => {
+      this.controlSetSubscription(controlToSuscribe, customOptionObject);
     });
   }
 
-  controlSetSubscription(control, field): void {
-    if (this.form.get(control) !== null) {
+  controlSetSubscription(
+    controlToSuscribe,
+    customOptionObject: OptionObject
+  ): void {
+    if (this.form.get(controlToSuscribe) !== null) {
       this.subscription.add(
-        this.form.get(control).valueChanges.subscribe(val => {
-          OptionBuilder.setSelectOptionsStates(field, val, this.form);
+        this.form.get(controlToSuscribe).valueChanges.subscribe(val => {
+          OptionBuilder.setSelectOptionsStates(
+            customOptionObject,
+            val,
+            this.form
+          );
         })
       );
     }

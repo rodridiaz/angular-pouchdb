@@ -1,8 +1,7 @@
-import { Component, ViewChild, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 
 import { FieldConfig } from '../../../core/ui/form/field.interface';
-import { DynamicFormComponent } from '../../../core/ui';
 import { ExerciseDetail } from '../../shared/exercise';
 import { ExerciseService } from '../../shared/exercise.service';
 import { take } from 'rxjs/operators';
@@ -13,8 +12,6 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./exercise-details.component.css']
 })
 export class ExerciseDetailsComponent {
-  @ViewChild(DynamicFormComponent) form: DynamicFormComponent;
-
   @Input() fieldsConfig: FieldConfig[];
   @Input() data: ExerciseDetail;
 
