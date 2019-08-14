@@ -1,6 +1,6 @@
 # AngularPouchdb
 
-A webapp using local PouchDB database to display welding exercises
+An angular webapp using local PouchDB database to display welding exercises
 
 ## Quick start
 
